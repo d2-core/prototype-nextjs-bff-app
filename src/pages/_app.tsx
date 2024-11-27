@@ -7,9 +7,8 @@ import globalStyles from '@styles/globalStyles'
 import ErrorBoundary from '@/components/shared/ErrorBoundary'
 import { AlertContextProvider } from '@/contexts/AlertContext'
 import { RecoilRoot } from 'recoil'
-import InitGuard from '@/components/auth/InitGuard'
-import ApiGuard from '@/components/auth/ApiGuard'
-import { useMemo } from 'react'
+import Init from '@/components/auth/Init'
+import ApiGuard from '@/components/auth/API'
 
 const client = new QueryClient({
   defaultOptions: {
@@ -32,9 +31,9 @@ export default function App({
             <ErrorBoundary>
               <AlertContextProvider>
                 <ApiGuard>
-                  <InitGuard>
+                  <Init>
                     <Component {...pageProps} />
-                  </InitGuard>
+                  </Init>
                 </ApiGuard>
               </AlertContextProvider>
             </ErrorBoundary>

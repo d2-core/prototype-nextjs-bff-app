@@ -4,10 +4,10 @@ import { useAlertContext } from '@/contexts/AlertContext'
 import { Api } from '@/models'
 import { api } from '@/remote/api'
 import { issueAccessToken } from '@/remote/api/auth'
-import { authLocalStorage } from '@/store/local'
+import { authStorage } from '@/store/local'
 import { HttpStatusCode } from 'axios'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 function ApiGuard({ children }: { children: React.ReactNode }) {
   const { open } = useAlertContext()
@@ -16,7 +16,7 @@ function ApiGuard({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const requestInterceptor = api.interceptors.request.use(
       (config) => {
-        const accessToken = authLocalStorage.get(LOCALSTORAGE.AUTH.ACESS_TOKEN)
+        const accessToken = authStorage.get(LOCALSTORAGE.AUTH.ACESS_TOKEN)
         if (accessToken) {
           config.headers.Authorization = `Bearer ${accessToken}`
         }
@@ -41,9 +41,7 @@ function ApiGuard({ children }: { children: React.ReactNode }) {
         const originalRequest = error.config
         if (status === HttpStatusCode.Unauthorized && !originalRequest._retry) {
           originalRequest._retry = true
-          const refreshToken = authLocalStorage.get(
-            LOCALSTORAGE.AUTH.REFRESH_TOKEN,
-          )
+          const refreshToken = authStorage.get(LOCALSTORAGE.AUTH.REFRESH_TOKEN)
           if (!refreshToken) {
             router.push('/signin')
             throw new Error(JSON.stringify(response))
