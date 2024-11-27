@@ -13,4 +13,4 @@ const initLocalStorage = (prefix: string): Storage => {
   }
 }
 
-export const authLocalStorage = initLocalStorage('auth')
+export const authStorage = initLocalStorage('auth')
