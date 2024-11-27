@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import { useEffect } from 'react'
 
 function Layout({ children }: { children: React.ReactNode }) {
   return (
