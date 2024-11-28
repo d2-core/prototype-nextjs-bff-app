@@ -1,18 +1,18 @@
 import { IssuedToken, User } from '@/models/auth'
-import { api } from '.'
-import { Api } from '@/models'
+import { Api } from '@/models/api'
+import { api } from './axios'
 
 export async function issueAccessToken(
   refreshToken: string,
 ): Promise<Api<IssuedToken>> {
-  const response = await api.post('auth-service/auth/v1/refresh', {
+  const response = await api.post('/api/auth-service/auth/v1/refresh', {
     refreshToken,
   })
-  return response.data.body
+  return response.data
 }
 
 export async function getAppUser(): Promise<Api<User>> {
-  const response = await api.post('auth-service/auth/v1/users/me')
+  const response = await api.get('/api/auth-service/auth/v1/users/me')
 
-  return response.data.body
+  return response.data
 }
