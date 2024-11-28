@@ -1,50 +1,62 @@
-import React, { ErrorInfo } from 'react'
+import { ApiError, ClientError } from '@/errors'
+import { ErrorInfo, useEffect, useState } from 'react'
+import { ErrorBoundary, FallbackProps } from 'react-error-boundary'
+import { error as mError } from '@models/error'
+import { useAlertContext } from '@/contexts/AlertContext'
 
 interface Props {
   children: React.ReactNode
   fallbackComponent?: React.ReactNode
 }
 
-interface State {
-  hasError: boolean
+interface D2ErrorBoundaryValue {
+  isError: boolean
+  message: string
 }
 
-class ErrorBoundary extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props)
+const defaultValue: D2ErrorBoundaryValue = {
+  isError: false,
+  message: '',
+}
 
-    this.state = { hasError: false }
-  }
+function D2ErrorBoundary({ children, fallbackComponent }: Props) {
+  const [value, setValue] = useState<D2ErrorBoundaryValue>(defaultValue)
+  const { open } = useAlertContext()
 
-  static getDerivedStateFromError(error: Error) {
-    return { hasError: true }
-  }
-
-  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.log({ error, errorInfo })
-  }
-
-  render() {
-    if (this.state.hasError) {
-      if (this.props.fallbackComponent != null) {
-        return <>{this.props.fallbackComponent}</>
-      }
-
-      return (
-        <div>
-          <h2>알 수 없는 문제가 발생했어요</h2>
-          <button
-            type="button"
-            onClick={() => this.setState({ hasError: false })}
-          >
-            재시도
-          </button>
-        </div>
-      )
+  const handleOnError = (error: Error, errorInfo: ErrorInfo) => {
+    if (error instanceof ClientError || error instanceof ApiError) {
+      console.error(error.log, errorInfo)
+      setValue({
+        isError: true,
+        message: error.msg,
+      })
+    } else {
+      console.error(error, errorInfo)
+      setValue({
+        isError: true,
+        message: `${mError.global.unknown.message} [${mError.global.unknown.code}]`,
+      })
     }
-
-    return this.props.children
   }
+
+  if (fallbackComponent == null && value.isError && value.message !== '') {
+    open({
+      title: value.message,
+      buttonLabel: '확인',
+      onButtonClick: () => {
+        setValue(defaultValue)
+      },
+    })
+  }
+
+  return (
+    <ErrorBoundary
+      FallbackComponent={() => fallbackComponent}
+      onError={(error, errorInfo) => handleOnError(error, errorInfo)}
+    >
+      {children}
+    </ErrorBoundary>
+  )
 }
 
-export default ErrorBoundary
+export default D2ErrorBoundary
