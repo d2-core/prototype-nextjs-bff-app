@@ -1,8 +1,9 @@
-import { ApiError, ClientError } from '@/errors'
 import { ErrorInfo, useEffect, useState } from 'react'
 import { ErrorBoundary, FallbackProps } from 'react-error-boundary'
-import { error as mError } from '@models/error'
 import { useAlertContext } from '@/contexts/AlertContext'
+import ClientError from '@/errors/ClientError'
+import ApiError from '@/errors/ApiError'
+import { ERROR } from '@/constants/error'
 
 interface Props {
   children: React.ReactNode
@@ -34,7 +35,7 @@ function D2ErrorBoundary({ children, fallbackComponent }: Props) {
       console.error(error, errorInfo)
       setValue({
         isError: true,
-        message: `${mError.global.unknown.message} [${mError.global.unknown.code}]`,
+        message: `${ERROR.GLOBAL.UNKNWON.message} [${ERROR.GLOBAL.UNKNWON.code}]`,
       })
     }
   }

@@ -7,7 +7,7 @@ import { authStorage } from '@/store/local'
 import { HttpStatusCode } from 'axios'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import { error as mError } from '@/models/error'
+import { ERROR } from '@/constants/error'
 import ClientError from '@/errors/ClientError'
 import ApiError from '@/errors/ApiError'
 import { api } from '@/remote/api/axios'
@@ -22,7 +22,7 @@ function ApiGuard({ children }: { children: React.ReactNode }) {
     if (!refreshToken) {
       router.push('/signin')
       throw new ClientError({
-        result: mError.api.invalidRefreshToken,
+        result: ERROR.API.IMVALID_REFRESH_TOKEN,
         body: {},
         reasonArg: `refreshToken: ${refreshToken}`,
       })
@@ -86,7 +86,7 @@ function ApiGuard({ children }: { children: React.ReactNode }) {
           throw new ApiError(apiResponse)
         } else {
           throw new ClientError({
-            result: mError.api.connectRefused,
+            result: ERROR.API.CONNECT_REFUSED,
             reasonArg: `url: ${api.getUri()}${error.config?.url}`,
             body: {},
           })

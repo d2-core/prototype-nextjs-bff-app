@@ -1,22 +1,22 @@
-import { Result } from './api'
+import { Result } from '../models/api'
 
-export const error = {
-  global: {
-    unknown: {
+export const ERROR = {
+  GLOBAL: {
+    UNKNWON: {
       code: 'CLIENT-0001',
       reason: 'invalid refresh token',
       message:
         '현재 시스템에 일시적인 문제가 발생했습니다. 잠시 후 다시 시도해주세요.',
     } as Result,
   },
-  api: {
-    invalidRefreshToken: {
+  API: {
+    IMVALID_REFRESH_TOKEN: {
       code: 'CLIENT-1001',
       reason: 'invalid refresh token',
       message:
         '현재 시스템에 일시적인 문제가 발생했습니다. 잠시 후 다시 시도해주세요.',
     } as Result,
-    connectRefused: {
+    CONNECT_REFUSED: {
       code: 'CLIENT-1002',
       reason: 'connect refused',
       message:
