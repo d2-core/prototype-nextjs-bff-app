@@ -1,4 +1,4 @@
-import { LOCALSTORAGE } from '@/constants/auth'
+import { LOCALSTORAGE } from '@/constants/localstorage'
 import { getAppUser } from '@/remote/api/auth'
 import { userAtom } from '@/store/atom/user'
 import { authStorage as authLocalStorage } from '@/store/local'
@@ -6,28 +6,31 @@ import { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
 import { useSetRecoilState } from 'recoil'
 
-function Init({ children }: { children: React.ReactNode }) {
-  const [initialize, setInitialize] = useState(false)
-  const setUser = useSetRecoilState(userAtom)
+function InitGuard({ children }: { children: React.ReactNode }) {
+  const [init, setInit] = useState(false)
+  const [accessToken, setAccessToken] = useState<string | null>(null)
 
-  const accessToken = authLocalStorage.get(LOCALSTORAGE.AUTH.ACESS_TOKEN)
+  const setUser = useSetRecoilState(userAtom)
   const { data } = useQuery(['user'], () => getAppUser(), {
     enabled: !!accessToken,
+    suspense: true,
   })
 
   useEffect(() => {
+    const token = authLocalStorage.get(LOCALSTORAGE.AUTH.ACESS_TOKEN)
+    setAccessToken(token)
     if (data?.body) {
       setUser(data.body)
     }
 
-    setInitialize(true)
+    setInit(true)
   }, [data, setUser])
 
-  if (initialize === false) {
+  if (init === false) {
     return null
   }
 
   return <>{children}</>
 }
 
-export default Init
+export default InitGuard
