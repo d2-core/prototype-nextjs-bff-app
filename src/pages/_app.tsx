@@ -4,11 +4,11 @@ import { QueryClientProvider, QueryClient, Hydrate } from 'react-query'
 import Layout from '@shared/Layout'
 
 import globalStyles from '@styles/globalStyles'
-import ErrorBoundary from '@/components/shared/ErrorBoundary'
 import { AlertContextProvider } from '@/contexts/AlertContext'
 import { RecoilRoot } from 'recoil'
-import Init from '@/components/auth/Init'
-import ApiGuard from '@/components/auth/API'
+import ApiGuard from '@/components/api/ApiGuard'
+import InitGuard from '@/components/init/InitGuard'
+import D2ErrorBoundary from '@/components/shared/ErrorBoundary'
 
 const client = new QueryClient({
   defaultOptions: {
@@ -28,15 +28,15 @@ export default function App({
       <RecoilRoot>
         <QueryClientProvider client={client}>
           <Hydrate state={dehydratedState}>
-            <ErrorBoundary>
-              <AlertContextProvider>
+            <AlertContextProvider>
+              <D2ErrorBoundary>
                 <ApiGuard>
-                  <Init>
+                  <InitGuard>
                     <Component {...pageProps} />
-                  </Init>
+                  </InitGuard>
                 </ApiGuard>
-              </AlertContextProvider>
-            </ErrorBoundary>
+              </D2ErrorBoundary>
+            </AlertContextProvider>
           </Hydrate>
         </QueryClientProvider>
       </RecoilRoot>
