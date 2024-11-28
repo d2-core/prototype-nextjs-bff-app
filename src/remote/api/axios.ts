@@ -14,3 +14,9 @@ export const initAxiosInstance = (
 
   return instance
 }
+
+export const GATEWAY_BASE_URL = 'http://localhost:3000'
+
+export const api = initAxiosInstance({
+  baseURL: GATEWAY_BASE_URL,
+})
