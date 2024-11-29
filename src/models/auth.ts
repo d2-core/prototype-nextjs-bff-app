@@ -6,7 +6,7 @@ export interface IssuedToken {
 export type Role = 'ADMIN' | 'APP'
 export type UserStatus = 'REGISTERED' | 'UNREGISTERED'
 export interface User {
-  id?: number
+  id: number
   role?: Role
   nickname?: string
   emali?: string
@@ -15,4 +15,11 @@ export interface User {
   registeredAt?: string
   modifiedAt?: string
   lastLoginAt: string
+}
+
+export interface Token {
+  accessToken: string
+  accessTokenExpiredAt: string
+  refreshToken: string
+  refreshTokenExpiredAt: string
 }

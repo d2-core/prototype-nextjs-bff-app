@@ -1,15 +1,17 @@
 import Button from '@/components/shared/Button'
-import { useEffect } from 'react'
+import { STAGE } from '@/constants/stage'
 
 function SignIn() {
-  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_API_KEY}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_LOGIN_REDIRECT_URL}&response_type=code`
-
-  console.log('QQ')
-  useEffect(() => {}, [])
+  const restApiKey =
+    process.env.NEXT_PUBLIC_STAGE === STAGE.DEV
+      ? `${process.env.NEXT_PUBLIC_DEV_KAKAO_API_KEY}`
+      : `${process.env.NEXT_PUBLIC_KAKAO_API_KEY}`
+  const refirectUrl = process.env.NEXT_PUBLIC_KAKAO_LOGIN_REDIRECT_URL
+  const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${restApiKey}&redirect_uri=${refirectUrl}`
 
   return (
-    <a href={KAKAO_AUTH_URL}>
-      <Button>KakaoLogin</Button>
+    <a href={kakaoAuthUrl}>
+      <Button>로그인</Button>
     </a>
   )
 }
