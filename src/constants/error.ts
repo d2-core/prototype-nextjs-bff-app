@@ -22,5 +22,11 @@ export const ERROR = {
       message:
         '현재 시스템에 일시적인 문제가 발생했습니다. 잠시 후 다시 시도해주세요.',
     } as Result,
+    NOT_INIT_API_INSTANCE: {
+      code: 'CLIENT-1003',
+      reason: 'not init api instance',
+      message:
+        '현재 시스템에 일시적인 문제가 발생했습니다. 잠시 후 다시 시도해주세요.',
+    } as Result,
   },
 }
