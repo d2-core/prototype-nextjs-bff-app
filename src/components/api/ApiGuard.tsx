@@ -60,8 +60,8 @@ function ApiGuard({ children }: { children: React.ReactNode }) {
         return response
       },
       async (error) => {
-        const apiResponse = error.response.data as Api<any>
-        if (apiResponse) {
+        if (error.response) {
+          const apiResponse = error.response.data as Api<any>
           const { status } = error.config || {}
           const originalRequest = error.config
 
