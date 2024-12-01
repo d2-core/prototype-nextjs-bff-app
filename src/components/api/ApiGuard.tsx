@@ -5,21 +5,25 @@ import { Api } from '@/models/api'
 import { issueAccessToken } from '@/remote/api/auth'
 import { authStorage } from '@/store/local'
 import { HttpStatusCode } from 'axios'
-import { useRouter } from 'next/router'
+
 import { useEffect, useState } from 'react'
 import { ERROR } from '@/constants/error'
 import ClientError from '@/errors/ClientError'
 import ApiError from '@/errors/ApiError'
 import { api } from '@/remote/api/axios'
+import { useRouter } from 'next/router'
 
 function ApiGuard({ children }: { children: React.ReactNode }) {
   const [init, setInit] = useState(false)
-  const { open } = useAlertContext()
   const router = useRouter()
+  const { open } = useAlertContext()
 
   const handleUnauthorized = async () => {
     const refreshToken = authStorage.get(LOCALSTORAGE.AUTH.REFRESH_TOKEN)
     if (!refreshToken) {
+      authStorage.remove(LOCALSTORAGE.AUTH.ACESS_TOKEN)
+      authStorage.remove(LOCALSTORAGE.AUTH.REFRESH_TOKEN)
+
       router.push('/signin')
       throw new ClientError({
         result: ERROR.API.IMVALID_REFRESH_TOKEN,
@@ -31,6 +35,9 @@ function ApiGuard({ children }: { children: React.ReactNode }) {
     const { result, body } = await issueAccessToken(refreshToken)
     const accessToken = body.token
     if (!accessToken) {
+      authStorage.remove(LOCALSTORAGE.AUTH.ACESS_TOKEN)
+      authStorage.remove(LOCALSTORAGE.AUTH.REFRESH_TOKEN)
+
       router.push('/signin')
       throw new ApiError({ result: result, body: body })
     }
@@ -43,7 +50,7 @@ function ApiGuard({ children }: { children: React.ReactNode }) {
       (config) => {
         const accessToken = authStorage.get(LOCALSTORAGE.AUTH.ACESS_TOKEN)
         if (accessToken) {
-          config.headers.Authorization = `Bearer ${accessToken}`
+          config.headers.Authorization = `${accessToken}`
         }
         return config
       },
