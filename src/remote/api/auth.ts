@@ -5,14 +5,14 @@ import { getApi } from './axios'
 export async function issueAccessToken(
   refreshToken: string,
 ): Promise<Api<IssuedToken>> {
-  const response = await getApi('AUTH').post('/v1/refresh', {
+  const response = await getApi('AUTH').post('auth/v1/refresh', {
     refreshToken,
   })
   return response.data
 }
 
 export async function getAppUser(): Promise<Api<User>> {
-  const response = await getApi('AUTH').get('/v1/users/me')
+  const response = await getApi('AUTH').get('auth/v1/users/me')
 
   return response.data
 }
@@ -20,7 +20,7 @@ export async function getAppUser(): Promise<Api<User>> {
 export async function loginWithKakao(
   code: string,
 ): Promise<Api<User & { token: Token }>> {
-  const response = await getApi('AUTH').post('/v1/users/login-with-kakao', {
+  const response = await getApi('AUTH').post('auth/v1/users/login-with-kakao', {
     code,
   })
 
