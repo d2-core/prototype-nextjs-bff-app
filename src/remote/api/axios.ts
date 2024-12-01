@@ -14,12 +14,9 @@ const initAxiosInstance = (config?: CreateAxiosDefaults): AxiosInstance => {
   return instance
 }
 
-/*
-Singleton -> ApiGuard Init
-*/
 export const api = initAxiosInstance()
 
 export function getApi(domain: Domain) {
-  api.defaults.baseURL = DOMAIN[domain]
+  api.defaults.baseURL = 'http://localhost:9090' + DOMAIN[domain]
   return api
 }
