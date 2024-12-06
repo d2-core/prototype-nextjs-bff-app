@@ -9,7 +9,7 @@ export interface User {
   id: number
   role?: Role
   nickname?: string
-  emali?: string
+  email?: string
   phoneNumber?: string
   status?: UserStatus
   registeredAt?: string

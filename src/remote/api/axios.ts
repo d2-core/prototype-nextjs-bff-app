@@ -1,4 +1,5 @@
 import { DOMAIN, Domain } from '@/constants/api'
+import { STAGE } from '@/constants/stage'
 import axios, { AxiosInstance, CreateAxiosDefaults } from 'axios'
 
 const initAxiosInstance = (config?: CreateAxiosDefaults): AxiosInstance => {
@@ -17,6 +18,7 @@ const initAxiosInstance = (config?: CreateAxiosDefaults): AxiosInstance => {
 export const api = initAxiosInstance()
 
 export function getApi(domain: Domain) {
-  api.defaults.baseURL = 'http://localhost:9090' + DOMAIN[domain]
+  api.defaults.baseURL = `http://localhost:9090${DOMAIN[domain]}`
+
   return api
 }

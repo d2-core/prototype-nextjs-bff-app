@@ -9,11 +9,11 @@ function SignIn() {
   const refirectUrl = process.env.NEXT_PUBLIC_KAKAO_LOGIN_REDIRECT_URL
   const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${restApiKey}&redirect_uri=${refirectUrl}`
 
-  return (
-    <a href={kakaoAuthUrl}>
-      <Button>로그인</Button>
-    </a>
-  )
+  const handleLogin = () => {
+    window.location.href = kakaoAuthUrl
+  }
+
+  return <Button onClick={handleLogin}>로그인</Button>
 }
 
 export default SignIn

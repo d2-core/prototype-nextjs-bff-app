@@ -1,4 +1,5 @@
 import { LOCALSTORAGE } from '@/constants/localstorage'
+import useUser from '@/hooks/auth/useUser'
 import { loginWithKakao } from '@/remote/api/auth'
 import { userAtom } from '@/store/atom/user'
 import { authStorage } from '@/store/local'
@@ -19,7 +20,7 @@ function KakaoCallback() {
     ['login-with-kakao'],
     () => loginWithKakao(code),
     {
-      enabled: !!code,
+      enabled: Boolean(code),
       suspense: true,
     },
   )
@@ -27,7 +28,7 @@ function KakaoCallback() {
   useEffect(() => {
     if (api?.body) {
       const { token, ...users } = api?.body
-      authStorage.set(LOCALSTORAGE.AUTH.ACESS_TOKEN, token.accessToken)
+      authStorage.set(LOCALSTORAGE.AUTH.ACCESS_TOKEN, token.accessToken)
       authStorage.set(LOCALSTORAGE.AUTH.REFRESH_TOKEN, token.refreshToken)
       setUser(users)
       router.push('/')

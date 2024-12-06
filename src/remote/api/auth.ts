@@ -1,12 +1,13 @@
 import { IssuedToken, Token, User } from '@/models/auth'
 import { Api } from '@/models/api'
 import { getApi } from './axios'
+import { HEADER } from '@/constants/header'
 
-export async function issueAccessToken(
-  refreshToken: string,
-): Promise<Api<IssuedToken>> {
-  const response = await getApi('AUTH').post('auth/v1/refresh', {
-    refreshToken,
+export async function refresh(refreshToken: string): Promise<Api<IssuedToken>> {
+  const response = await getApi('AUTH').post('auth/v1/tokens/refresh', null, {
+    headers: {
+      [HEADER.REFRESH]: refreshToken,
+    },
   })
   return response.data
 }
