@@ -2,7 +2,7 @@ import { LOCALSTORAGE } from '@/constants/localstorage'
 import { API } from '@/constants/api'
 import { useAlertContext } from '@/contexts/AlertContext'
 import { Api } from '@/models/api'
-import { issueAccessToken } from '@/remote/api/auth'
+import { refresh } from '@/remote/api/auth'
 import { authStorage } from '@/store/local'
 import { HttpStatusCode } from 'axios'
 
@@ -12,19 +12,30 @@ import ClientError from '@/errors/ClientError'
 import ApiError from '@/errors/ApiError'
 import { api } from '@/remote/api/axios'
 import { useRouter } from 'next/router'
+import { HEADER } from '@/constants/header'
+import { useSetRecoilState } from 'recoil'
+import { userAtom } from '@/store/atom/user'
 
-function ApiGuard({ children }: { children: React.ReactNode }) {
+function ApiInit({ children }: { children: React.ReactNode }) {
   const [init, setInit] = useState(false)
   const router = useRouter()
   const { open } = useAlertContext()
+  const setUser = useSetRecoilState(userAtom)
+
+  const handleLogout = () => {
+    authStorage.remove(LOCALSTORAGE.AUTH.ACCESS_TOKEN)
+    authStorage.remove(LOCALSTORAGE.AUTH.REFRESH_TOKEN)
+
+    setUser(null)
+
+    router.push('/auth/signin')
+  }
 
   const handleUnauthorized = async () => {
     const refreshToken = authStorage.get(LOCALSTORAGE.AUTH.REFRESH_TOKEN)
     if (!refreshToken) {
-      authStorage.remove(LOCALSTORAGE.AUTH.ACESS_TOKEN)
-      authStorage.remove(LOCALSTORAGE.AUTH.REFRESH_TOKEN)
+      handleLogout()
 
-      router.push('/signin')
       throw new ClientError({
         result: ERROR.API.IMVALID_REFRESH_TOKEN,
         body: {},
@@ -32,13 +43,11 @@ function ApiGuard({ children }: { children: React.ReactNode }) {
       })
     }
 
-    const { result, body } = await issueAccessToken(refreshToken)
+    const { result, body } = await refresh(refreshToken)
     const accessToken = body.token
     if (!accessToken) {
-      authStorage.remove(LOCALSTORAGE.AUTH.ACESS_TOKEN)
-      authStorage.remove(LOCALSTORAGE.AUTH.REFRESH_TOKEN)
+      handleLogout()
 
-      router.push('/signin')
       throw new ApiError({ result: result, body: body })
     }
 
@@ -48,7 +57,7 @@ function ApiGuard({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const requestInterceptor = api.interceptors.request.use(
       (config) => {
-        const accessToken = authStorage.get(LOCALSTORAGE.AUTH.ACESS_TOKEN)
+        const accessToken = authStorage.get(LOCALSTORAGE.AUTH.ACCESS_TOKEN)
         if (accessToken) {
           config.headers.Authorization = `${accessToken}`
         }
@@ -69,17 +78,25 @@ function ApiGuard({ children }: { children: React.ReactNode }) {
       async (error) => {
         if (error.response) {
           const apiResponse = error.response.data as Api<any>
-          const { status } = error.config || {}
-          const originalRequest = error.config
+          const { headers } = error.config
+          const { status } = error.response || {}
+          const { request } = error
 
           if (
             status === HttpStatusCode.Unauthorized &&
-            !originalRequest._retry
+            Boolean(headers[HEADER.REFRESH])
           ) {
-            originalRequest._retry = true
+            handleLogout()
+
+            throw new ApiError(apiResponse)
+          }
+
+          if (status === HttpStatusCode.Unauthorized && !request._retry) {
+            request._retry = true
             const accessToken = await handleUnauthorized()
-            authStorage.set(LOCALSTORAGE.AUTH.ACESS_TOKEN, accessToken)
-            return api(originalRequest)
+            authStorage.set(LOCALSTORAGE.AUTH.ACCESS_TOKEN, accessToken)
+
+            return api(request.responseURL)
           }
 
           if (status === HttpStatusCode.Forbidden) {
@@ -89,15 +106,17 @@ function ApiGuard({ children }: { children: React.ReactNode }) {
                 router.back()
               },
             })
+            throw new ApiError(apiResponse)
           }
+
           throw new ApiError(apiResponse)
-        } else {
-          throw new ClientError({
-            result: ERROR.API.CONNECT_REFUSED,
-            reasonArg: `url: ${api.getUri()}${error.config?.url}`,
-            body: {},
-          })
         }
+
+        throw new ClientError({
+          result: ERROR.API.CONNECT_REFUSED,
+          reasonArg: `url: ${api.getUri()}${error.config?.url}`,
+          body: {},
+        })
       },
     )
 
@@ -116,4 +135,4 @@ function ApiGuard({ children }: { children: React.ReactNode }) {
   return <>{children}</>
 }
 
-export default ApiGuard
+export default ApiInit
