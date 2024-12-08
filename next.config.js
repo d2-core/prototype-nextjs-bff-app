@@ -3,6 +3,14 @@ const nextConfig = {
   reactStrictMode: false,
   swcMinify: true,
   trailingSlash: true,
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**.iconfinder.com',
+      },
+    ],
+  },
 }
 
 module.exports = nextConfig
