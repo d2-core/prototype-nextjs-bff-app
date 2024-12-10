@@ -21,6 +21,7 @@ interface ButtonProps {
 
 const BaseButton = styled.button<ButtonProps>(
   {
+    minHeight: '40px',
     cursor: 'pointer',
     fontWeight: 'bold',
     borderRadius: '6px',
@@ -56,9 +57,7 @@ function ButtonGroup({
     <Flex direction="column">
       {title != null ? (
         <>
-          <Text typography="t6" bold={true}>
-            {title}
-          </Text>
+          <Text typography="t7">{title}</Text>
           <Spacing size={8} />
         </>
       ) : null}
