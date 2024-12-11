@@ -1,0 +1,24 @@
+import { colors } from '@styles/colorPalette'
+import styled from '@emotion/styled'
+
+const TextArea = styled.textarea`
+  padding: 16px;
+  font-size: 15px;
+  height: 480px;
+  font-weight: 500;
+  border: 1px solid ${colors.gray300};
+  border-radius: 6px;
+  width: 100%;
+  box-sizing: border-box;
+
+  &:focus {
+    outline: none;
+    border-color: ${colors.blue};
+  }
+
+  &[aria-invalid='true'] {
+    border-color: ${colors.red};
+  }
+`
+
+export default TextArea
