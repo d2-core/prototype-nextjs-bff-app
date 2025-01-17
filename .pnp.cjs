@@ -33,7 +33,6 @@ const RAW_RUNTIME_STATE =
           ["@mui/material", "virtual:027f27212abfeaf24bd7f5fbdf4bbb6c0e768dbfebaf265a916de721709b708559d50d1eb6afb6db1b652f9772ea5acf83e041f47f5bfd053d9ccad3fd0a6b33#npm:6.4.0"],\
           ["@mui/styles", "virtual:027f27212abfeaf24bd7f5fbdf4bbb6c0e768dbfebaf265a916de721709b708559d50d1eb6afb6db1b652f9772ea5acf83e041f47f5bfd053d9ccad3fd0a6b33#npm:6.4.0"],\
           ["@types/node", "npm:22.9.1"],\
-          ["@types/qs", "npm:6.9.18"],\
           ["@types/react", "npm:18.3.12"],\
           ["@types/react-dom", "npm:18.3.1"],\
           ["@types/uuid", "npm:10.0.0"],\
@@ -49,7 +48,6 @@ const RAW_RUNTIME_STATE =
           ["lucide-react", "virtual:027f27212abfeaf24bd7f5fbdf4bbb6c0e768dbfebaf265a916de721709b708559d50d1eb6afb6db1b652f9772ea5acf83e041f47f5bfd053d9ccad3fd0a6b33#npm:0.469.0"],\
           ["next", "virtual:027f27212abfeaf24bd7f5fbdf4bbb6c0e768dbfebaf265a916de721709b708559d50d1eb6afb6db1b652f9772ea5acf83e041f47f5bfd053d9ccad3fd0a6b33#npm:13.0.0"],\
           ["prettier", "npm:3.4.2"],\
-          ["qs", "npm:6.14.0"],\
           ["react", "npm:18.3.1"],\
           ["react-dom", "virtual:027f27212abfeaf24bd7f5fbdf4bbb6c0e768dbfebaf265a916de721709b708559d50d1eb6afb6db1b652f9772ea5acf83e041f47f5bfd053d9ccad3fd0a6b33#npm:18.3.1"],\
           ["react-hls-player", "virtual:027f27212abfeaf24bd7f5fbdf4bbb6c0e768dbfebaf265a916de721709b708559d50d1eb6afb6db1b652f9772ea5acf83e041f47f5bfd053d9ccad3fd0a6b33#npm:3.0.7"],\
@@ -1175,15 +1173,6 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../../../../.yarn/berry/cache/@types-prop-types-npm-15.7.14-4ccaa07795-10c0.zip/node_modules/@types/prop-types/",\
         "packageDependencies": [\
           ["@types/prop-types", "npm:15.7.14"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["@types/qs", [\
-      ["npm:6.9.18", {\
-        "packageLocation": "../../../../.yarn/berry/cache/@types-qs-npm-6.9.18-125db28c30-10c0.zip/node_modules/@types/qs/",\
-        "packageDependencies": [\
-          ["@types/qs", "npm:6.9.18"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -5436,7 +5425,6 @@ const RAW_RUNTIME_STATE =
           ["@mui/material", "virtual:027f27212abfeaf24bd7f5fbdf4bbb6c0e768dbfebaf265a916de721709b708559d50d1eb6afb6db1b652f9772ea5acf83e041f47f5bfd053d9ccad3fd0a6b33#npm:6.4.0"],\
           ["@mui/styles", "virtual:027f27212abfeaf24bd7f5fbdf4bbb6c0e768dbfebaf265a916de721709b708559d50d1eb6afb6db1b652f9772ea5acf83e041f47f5bfd053d9ccad3fd0a6b33#npm:6.4.0"],\
           ["@types/node", "npm:22.9.1"],\
-          ["@types/qs", "npm:6.9.18"],\
           ["@types/react", "npm:18.3.12"],\
           ["@types/react-dom", "npm:18.3.1"],\
           ["@types/uuid", "npm:10.0.0"],\
@@ -5452,7 +5440,6 @@ const RAW_RUNTIME_STATE =
           ["lucide-react", "virtual:027f27212abfeaf24bd7f5fbdf4bbb6c0e768dbfebaf265a916de721709b708559d50d1eb6afb6db1b652f9772ea5acf83e041f47f5bfd053d9ccad3fd0a6b33#npm:0.469.0"],\
           ["next", "virtual:027f27212abfeaf24bd7f5fbdf4bbb6c0e768dbfebaf265a916de721709b708559d50d1eb6afb6db1b652f9772ea5acf83e041f47f5bfd053d9ccad3fd0a6b33#npm:13.0.0"],\
           ["prettier", "npm:3.4.2"],\
-          ["qs", "npm:6.14.0"],\
           ["react", "npm:18.3.1"],\
           ["react-dom", "virtual:027f27212abfeaf24bd7f5fbdf4bbb6c0e768dbfebaf265a916de721709b708559d50d1eb6afb6db1b652f9772ea5acf83e041f47f5bfd053d9ccad3fd0a6b33#npm:18.3.1"],\
           ["react-hls-player", "virtual:027f27212abfeaf24bd7f5fbdf4bbb6c0e768dbfebaf265a916de721709b708559d50d1eb6afb6db1b652f9772ea5acf83e041f47f5bfd053d9ccad3fd0a6b33#npm:3.0.7"],\
@@ -5484,16 +5471,6 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../../../../.yarn/berry/cache/punycode-npm-2.3.1-97543c420d-10c0.zip/node_modules/punycode/",\
         "packageDependencies": [\
           ["punycode", "npm:2.3.1"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["qs", [\
-      ["npm:6.14.0", {\
-        "packageLocation": "../../../../.yarn/berry/cache/qs-npm-6.14.0-6b298311eb-10c0.zip/node_modules/qs/",\
-        "packageDependencies": [\
-          ["qs", "npm:6.14.0"],\
-          ["side-channel", "npm:1.1.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -9444,7 +9421,7 @@ class MountFS extends BasePortableFakeFS {
         if (this.notMount.has(filePath))
           continue;
         try {
-          if (this.typeCheck !== null && (this.baseFs.lstatSync(filePath).mode & fs.constants.S_IFMT) !== this.typeCheck) {
+          if (this.typeCheck !== null && (this.baseFs.statSync(filePath).mode & fs.constants.S_IFMT) !== this.typeCheck) {
             this.notMount.add(filePath);
             continue;
           }
@@ -12457,18 +12434,20 @@ Require stack:
     }
     return false;
   };
-  const originalExtensionJSFunction = require$$0.Module._extensions[`.js`];
-  require$$0.Module._extensions[`.js`] = function(module, filename) {
-    if (filename.endsWith(`.js`)) {
-      const pkg = readPackageScope(filename);
-      if (pkg && pkg.data?.type === `module`) {
-        const err = ERR_REQUIRE_ESM(filename, module.parent?.filename);
-        Error.captureStackTrace(err);
-        throw err;
+  if (!process.features.require_module) {
+    const originalExtensionJSFunction = require$$0.Module._extensions[`.js`];
+    require$$0.Module._extensions[`.js`] = function(module, filename) {
+      if (filename.endsWith(`.js`)) {
+        const pkg = readPackageScope(filename);
+        if (pkg && pkg.data?.type === `module`) {
+          const err = ERR_REQUIRE_ESM(filename, module.parent?.filename);
+          Error.captureStackTrace(err);
+          throw err;
+        }
       }
-    }
-    originalExtensionJSFunction.call(this, module, filename);
-  };
+      originalExtensionJSFunction.call(this, module, filename);
+    };
+  }
   const originalDlopen = process.dlopen;
   process.dlopen = function(...args) {
     const [module, filename, ...rest] = args;
