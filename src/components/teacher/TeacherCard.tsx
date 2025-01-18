@@ -29,7 +29,6 @@ function TeacherCard({ teacher }: Props) {
     <Card
       onClick={handleTeacherDetailRoute}
       sx={{
-        height: '100%',
         display: 'flex',
         flexDirection: 'column',
         transition: 'transform 0.2s',
