@@ -7,7 +7,7 @@ import Layout from '@/components/shared/Layout'
 import { AlertContextProvider } from '@/contexts/AlertContext'
 import ApiInit from '@/components/shared/ApiInit'
 import UserInit from '@/components/shared/UserInit'
-import withAuthGuard from '@/components/shared/hocs/hocs/withAuthGuard'
+import withAuthGuard from '@/components/shared/hocs/withAuthGuard'
 
 const client = new QueryClient({
   defaultOptions: {
