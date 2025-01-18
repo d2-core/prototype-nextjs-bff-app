@@ -1,7 +1,7 @@
 export interface User {
   id?: number
   role?: 'ADMIN' | 'APP'
-  nickName?: string
+  nickname?: string
   imageUrl?: string
   email?: string
   phoneNumber?: string

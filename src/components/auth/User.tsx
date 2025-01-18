@@ -1,13 +1,26 @@
-import { User as IUser } from '@/models/auth'
-import { Box, Card, CardContent, Container, Typography } from '@mui/material'
+import { localstorageMap } from '@/constants/localstorage'
+import useUser from '@/hooks/useUser'
+import { authStorage } from '@/store/local'
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Container,
+  Typography,
+} from '@mui/material'
+import { useRouter } from 'next/router'
 
 function User() {
-  const userProfile: IUser = {
-    id: 1,
-    nickName: '김철수',
-    email: 'cheolsu.kim@example.com',
-    imageUrl: '/profile-image.jpg',
-    registeredAt: '2023-01-15',
+  const { user, setUser } = useUser()
+  const route = useRouter()
+
+  const handleLogout = () => {
+    authStorage.remove(localstorageMap.AUTH.ACCESS_TOKEN)
+    authStorage.remove(localstorageMap.AUTH.REFRESH_TOKEN)
+
+    setUser(null)
+    route.push('/')
   }
 
   return (
@@ -17,31 +30,39 @@ function User() {
       </Typography>
       <Card sx={{ mb: 4, overflow: 'visible' }}>
         <CardContent>
-          <Box display={'flex'}>
-            <Box
-              component={'img'}
-              src={userProfile.imageUrl}
-              sx={{
-                width: '100px',
-                height: '100px',
-                borderRadius: '50%',
-                objectFit: 'cover',
-                border: '3px solid white',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-                mr: 4,
-              }}
-            />
-            <Box>
-              <Typography variant="h4" gutterBottom>
-                {userProfile.nickName}
-              </Typography>
-              <Typography variant="body1" color="text.secondary">
-                이메일: {userProfile.email}
-              </Typography>
-              <Typography variant="body1" color="text.secondary">
-                가입일: {userProfile?.registeredAt}
-              </Typography>
+          <Box
+            display={'flex'}
+            alignItems={'center'}
+            justifyContent={'space-between'}
+          >
+            <Box display={'flex'}>
+              <Box
+                component={'img'}
+                src={user?.imageUrl}
+                sx={{
+                  width: '100px',
+                  height: '100px',
+                  borderRadius: '50%',
+                  objectFit: 'cover',
+                  border: '3px solid white',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                  mr: 4,
+                }}
+              />
+              <Box>
+                <Typography variant="h4" gutterBottom>
+                  이름: {user?.nickname}
+                </Typography>
+                <Typography variant="body1" color="text.secondary">
+                  이메일: {user?.email}
+                </Typography>
+                <Typography variant="body1" color="text.secondary">
+                  가입일: {user?.registeredAt}
+                </Typography>
+              </Box>
             </Box>
+
+            <Button onClick={handleLogout}>로그아웃</Button>
           </Box>
         </CardContent>
       </Card>
