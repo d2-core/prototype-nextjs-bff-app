@@ -8,16 +8,16 @@ import {
   CardMedia,
   Chip,
   Rating,
-  Stack,
   Typography,
 } from '@mui/material'
 import { useRouter } from 'next/router'
 
 interface Props {
   course: Course
+  width?: string
 }
 
-function CourseCard({ course }: Props) {
+function CourseCard({ course, width }: Props) {
   const route = useRouter()
   const handleCourseDetailRoute = () => {
     route.push(`course/${course.id}`)
@@ -26,7 +26,7 @@ function CourseCard({ course }: Props) {
     <Card
       onClick={handleCourseDetailRoute}
       sx={{
-        width: 300,
+        width: width ?? '100%',
         flexShrink: 0,
         mr: 2,
         transition: 'transform 0.2s',
@@ -57,7 +57,7 @@ function CourseCard({ course }: Props) {
       </Box>
 
       <CardContent>
-        <Stack direction="row" spacing={1} sx={{ mb: 1 }}>
+        <Box display={'flex'} gap={1} alignItems={'center'} mb={1}>
           <Chip
             label={course.level}
             size="small"
@@ -70,13 +70,13 @@ function CourseCard({ course }: Props) {
             }
           />
           {course.isNew && <Chip label="New" size="small" color="primary" />}
-        </Stack>
+        </Box>
 
         <Typography variant="subtitle1" gutterBottom noWrap>
           {course.title}
         </Typography>
 
-        <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 1 }}>
+        <Box display={'flex'} gap={1} alignItems={'center'} mb={1}>
           <Box
             component="img"
             src={course.teacherImage}
@@ -86,25 +86,25 @@ function CourseCard({ course }: Props) {
           <Typography variant="body2" color="text.secondary">
             {course.teacherName}
           </Typography>
-        </Stack>
+        </Box>
 
-        <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 1 }}>
+        <Box display={'flex'} gap={1} alignItems={'center'} mb={1}>
           <Rating value={course.rating} readOnly precision={0.1} size="small" />
           <Typography variant="body2" color="text.secondary">
             ({course.reviewCount})
           </Typography>
-        </Stack>
+        </Box>
 
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
+        <Box
+          display={'flex'}
+          alignItems={'center'}
+          justifyContent={'space-between'}
         >
           <Typography variant="h6" color="primary">
             {course.price.toLocaleString()}원
           </Typography>
           <BookmarkBorder />
-        </Stack>
+        </Box>
       </CardContent>
     </Card>
   )
