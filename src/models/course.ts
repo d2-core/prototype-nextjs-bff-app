@@ -14,16 +14,15 @@ export interface Course {
   isHot?: boolean
   discountRate?: number
   description: string
-  // Additional fields
   category: string[]
   language: string
   lastUpdated: string
-  duration: {
+  duration?: {
     hours: number
     minutes: number
   }
-  totalLessons: number
-  enrolled: number
+  totalLessons?: number
+  enrolled?: number
   syllabus: {
     sectionTitle: string
     lessons: {
@@ -37,7 +36,7 @@ export interface Course {
   learningOutcomes: string[]
   requirements: string[]
   targetAudience: string[]
-  features: {
+  features?: {
     certificateProvided: boolean
     lifetimeAccess: boolean
     downloadableResources: number

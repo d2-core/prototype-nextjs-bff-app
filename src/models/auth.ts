@@ -2,12 +2,13 @@ export interface User {
   id?: number
   role?: 'ADMIN' | 'APP'
   nickName?: string
+  imageUrl?: string
   email?: string
   phoneNumber?: string
   status?: 'REGISTERED' | 'UNREGISTERED'
   registeredAt?: string
   modifiedAt?: string
-  lastLoginAt: string
+  lastLoginAt?: string
 }
 
 export interface Token {
