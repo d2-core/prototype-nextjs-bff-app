@@ -1,17 +1,17 @@
 import TopNav from '@/components/shared/TopNav'
-import StudentClassRoom from '@/components/student/StudentClassRoom'
+import QuestionDetail from '@/components/question/QuestionDetail'
 import { Box } from '@mui/material'
 import { useRouter } from 'next/router'
 
-function MyCourseDetailPage() {
+function MyQuestionDetailPage() {
   const route = useRouter()
   const { id } = route.query
   return (
     <Box>
       <TopNav />
-      <StudentClassRoom courseId={parseInt(id as string)} />
+      <QuestionDetail questionId={parseInt(id as string)} />
     </Box>
   )
 }
 
-export default MyCourseDetailPage
+export default MyQuestionDetailPage
