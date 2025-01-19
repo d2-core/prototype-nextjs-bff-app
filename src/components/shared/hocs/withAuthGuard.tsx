@@ -1,23 +1,20 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import useUser from '@/hooks/useUser'
+import { useLoginModalContext } from '@/contexts/LoginModalContext'
 
 function withAuthGuard(Component: React.ComponentType) {
   const AuthenticatedComponent = (props: any) => {
     const { user } = useUser()
     const router = useRouter()
     const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null)
+    const { open } = useLoginModalContext()
     useEffect(() => {
-      const publicRoutes = [
-        '/',
-        '/start',
-        '/auth/login',
-        '/auth/signup',
-        '/auth/callback/kakao',
-      ]
+      const publicRoutes = ['/', '/start', '/auth/callback/kakao']
       if (!publicRoutes.includes(router.pathname) && user == null) {
         setIsAuthenticated(false)
-        router.push('/auth/login')
+        router.push('/')
+        open()
       } else {
         setIsAuthenticated(true)
       }
@@ -40,8 +37,6 @@ function withAuthGuard(Component: React.ComponentType) {
       return <Component {...props} />
     }
     return null
-
-    return <Component {...props} />
   }
 
   return AuthenticatedComponent

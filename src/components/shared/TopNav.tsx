@@ -1,51 +1,31 @@
 import { Box, Button, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 import useUser from '@/hooks/useUser'
+import { useLoginModalContext } from '@/contexts/LoginModalContext'
 
 function TopNav() {
   const route = useRouter()
   const { user } = useUser()
-  const [downloadAnchorEl, setDownloadAnchorEl] = useState<null | HTMLElement>(
-    null,
-  )
+  const { open } = useLoginModalContext()
 
-  const handleWorkspaceRoute = useCallback(() => {
+  const handleRouteHomePage = useCallback(() => {
     route.push('/')
   }, [route])
 
-  const handleLoginPageRoute = useCallback(() => {
-    route.push('/auth/login')
+  const handleOpenLoginModal = useCallback(() => {
+    open()
   }, [route])
 
-  const handleMyPageRoute = useCallback(() => {
+  const handleRouteMyPage = useCallback(() => {
     route.push('/my')
   }, [route])
-
-  const handleDownloadClick = (event: React.MouseEvent<HTMLElement>) => {
-    event.stopPropagation() // 이벤트 전파 중지
-    setDownloadAnchorEl(event.currentTarget)
-  }
-
-  const handleDownloadClose = () => {
-    setDownloadAnchorEl(null)
-  }
-
-  const handleLectureDetail = useCallback(
-    (lectureId: number, event: React.MouseEvent) => {
-      event.preventDefault() // 기본 이벤트 방지
-      event.stopPropagation() // 이벤트 전파 중지
-      route.push(`/workspace/lecture/${lectureId}`)
-      handleDownloadClose()
-    },
-    [route],
-  )
 
   const randerAuth = useCallback(() => {
     if (!user) {
       return (
         <Button
-          onClick={handleLoginPageRoute}
+          onClick={handleOpenLoginModal}
           variant="contained"
           color="primary"
         >
@@ -56,12 +36,12 @@ function TopNav() {
 
     return (
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-        <Button onClick={handleMyPageRoute} variant="contained" color="primary">
+        <Button onClick={handleRouteMyPage} variant="contained" color="primary">
           마이페이지
         </Button>
       </Box>
     )
-  }, [user, handleLoginPageRoute, handleMyPageRoute])
+  }, [user, handleOpenLoginModal, handleRouteMyPage])
 
   return (
     <Box
@@ -78,7 +58,7 @@ function TopNav() {
     >
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
         <Typography
-          onClick={handleWorkspaceRoute}
+          onClick={handleRouteHomePage}
           variant="h6"
           sx={{
             color: 'inherit',

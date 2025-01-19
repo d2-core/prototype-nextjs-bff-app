@@ -33,7 +33,9 @@ function KakaoCallback() {
           router.back()
         }
       },
-      onError: () => router.push('/auth/login'),
+      onError: () => {
+        router.push('/')
+      },
     },
   )
 
