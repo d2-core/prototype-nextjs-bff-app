@@ -23,7 +23,7 @@ interface Props {
 function TeacherCard({ teacher }: Props) {
   const route = useRouter()
   const handleTeacherDetailRoute = () => {
-    route.push(`/teacher/${teacher.id}`)
+    route.push(`/teachers/${teacher.id}`)
   }
   return (
     <Card

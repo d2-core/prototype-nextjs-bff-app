@@ -27,7 +27,7 @@ function ApiInit({ children }: { children: React.ReactNode }) {
 
     setUser(null)
 
-    router.push('/auth/login')
+    router.push('/starts')
   }
 
   const handleUnauthorized = async () => {

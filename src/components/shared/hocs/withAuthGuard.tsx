@@ -3,22 +3,27 @@ import { useRouter } from 'next/router'
 import useUser from '@/hooks/useUser'
 import { useLoginModalContext } from '@/contexts/LoginModalContext'
 
+function isMyPath(path: string): boolean {
+  return path.startsWith('/my')
+}
+
 function withAuthGuard(Component: React.ComponentType) {
   const AuthenticatedComponent = (props: any) => {
     const { user } = useUser()
     const router = useRouter()
     const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null)
     const { open } = useLoginModalContext()
+
     useEffect(() => {
-      const publicRoutes = ['/', '/start', '/auth/callback/kakao']
-      if (!publicRoutes.includes(router.pathname) && user == null) {
+      if (isMyPath(router.pathname) && user == null) {
         setIsAuthenticated(false)
         router.push('/')
         open()
       } else {
         setIsAuthenticated(true)
       }
-    }, [router, user])
+    }, [router, user, open])
+
     if (isAuthenticated === null) {
       return (
         <div
@@ -33,9 +38,11 @@ function withAuthGuard(Component: React.ComponentType) {
         </div>
       )
     }
+
     if (isAuthenticated) {
       return <Component {...props} />
     }
+
     return null
   }
 

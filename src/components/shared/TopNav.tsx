@@ -10,7 +10,7 @@ function TopNav() {
   const { open } = useLoginModalContext()
 
   const handleRouteHomePage = useCallback(() => {
-    route.push('/')
+    route.push('/starts')
   }, [route])
 
   const handleOpenLoginModal = useCallback(() => {

@@ -20,7 +20,7 @@ function User() {
     authStorage.remove(localstorageMap.AUTH.REFRESH_TOKEN)
 
     setUser(null)
-    route.push('/')
+    route.push('/starts')
   }
 
   return (
