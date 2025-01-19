@@ -1,186 +1,27 @@
-import { Box, Container, Grid } from '@mui/material'
-import { useState } from 'react'
+import { Box, Container, Grid, Typography } from '@mui/material'
+import { ReactNode, useState } from 'react'
 import CourseCard from './CourseCard'
 import { Course as ICourse } from '@models/course'
 import Spacing from '../shared/Spacing'
 import CourseFilter from './CourseFilter'
+import ListDirection from '../shared/ListDirection'
 
-const sampleCourses: ICourse[] = [
-  {
-    id: '1',
-    title: 'Complete Web Development Bootcamp',
-    thumbnail: '/course1.jpg',
-    teacherName: 'John Doe',
-    teacherImage: '/profile1.jpg',
-    teacherId: '1',
-    level: 'beginner',
-    price: 99.99,
-    originalPrice: 199.99,
-    rating: 4.8,
-    reviewCount: 1250,
-    isNew: true,
-    isHot: true,
-    discountRate: 50,
-    description:
-      'Comprehensive web development course covering frontend and backend',
-    category: ['Web Development', 'JavaScript', 'React'],
-    language: 'English',
-    lastUpdated: '2024-01-15',
-    syllabus: [],
-    learningOutcomes: [],
-    requirements: [],
-    targetAudience: [],
-    reviews: [],
-    faqs: [],
-  },
-  {
-    id: '1',
-    title: 'Complete Web Development Bootcamp',
-    thumbnail: '/course1.jpg',
-    teacherName: 'John Doe',
-    teacherImage: '/profile1.jpg',
-    teacherId: '1',
-    level: 'beginner',
-    price: 99.99,
-    originalPrice: 199.99,
-    rating: 4.8,
-    reviewCount: 1250,
-    isNew: true,
-    isHot: true,
-    discountRate: 50,
-    description:
-      'Comprehensive web development course covering frontend and backend',
-    category: ['Web Development', 'JavaScript', 'React'],
-    language: 'English',
-    lastUpdated: '2024-01-15',
-    syllabus: [],
-    learningOutcomes: [],
-    requirements: [],
-    targetAudience: [],
-    reviews: [],
-    faqs: [],
-  },
-  {
-    id: '1',
-    title: 'Complete Web Development Bootcamp',
-    thumbnail: '/course1.jpg',
-    teacherName: 'John Doe',
-    teacherImage: '/profile1.jpg',
-    teacherId: '1',
-    level: 'beginner',
-    price: 99.99,
-    originalPrice: 199.99,
-    rating: 4.8,
-    reviewCount: 1250,
-    isNew: true,
-    isHot: true,
-    discountRate: 50,
-    description:
-      'Comprehensive web development course covering frontend and backend',
-    category: ['Web Development', 'JavaScript', 'React'],
-    language: 'English',
-    lastUpdated: '2024-01-15',
-    syllabus: [],
-    learningOutcomes: [],
-    requirements: [],
-    targetAudience: [],
-    reviews: [],
-    faqs: [],
-  },
-  {
-    id: '1',
-    title: 'Complete Web Development Bootcamp',
-    thumbnail: '/course1.jpg',
-    teacherName: 'John Doe',
-    teacherImage: '/profile1.jpg',
-    teacherId: '1',
-    level: 'beginner',
-    price: 99.99,
-    originalPrice: 199.99,
-    rating: 4.8,
-    reviewCount: 1250,
-    isNew: true,
-    isHot: true,
-    discountRate: 50,
-    description:
-      'Comprehensive web development course covering frontend and backend',
-    category: ['Web Development', 'JavaScript', 'React'],
-    language: 'English',
-    lastUpdated: '2024-01-15',
-    syllabus: [],
-    learningOutcomes: [],
-    requirements: [],
-    targetAudience: [],
-    reviews: [],
-    faqs: [],
-  },
-  {
-    id: '1',
-    title: 'Complete Web Development Bootcamp',
-    thumbnail: '/course1.jpg',
-    teacherName: 'John Doe',
-    teacherImage: '/profile1.jpg',
-    teacherId: '1',
-    level: 'beginner',
-    price: 99.99,
-    originalPrice: 199.99,
-    rating: 4.8,
-    reviewCount: 1250,
-    isNew: true,
-    isHot: true,
-    discountRate: 50,
-    description:
-      'Comprehensive web development course covering frontend and backend',
-    category: ['Web Development', 'JavaScript', 'React'],
-    language: 'English',
-    lastUpdated: '2024-01-15',
-    syllabus: [],
-    learningOutcomes: [],
-    requirements: [],
-    targetAudience: [],
-    reviews: [],
-    faqs: [],
-  },
-  {
-    id: '1',
-    title: 'Complete Web Development Bootcamp',
-    thumbnail: '/course1.jpg',
-    teacherName: 'John Doe',
-    teacherImage: '/profile1.jpg',
-    teacherId: '1',
-    level: 'beginner',
-    price: 99.99,
-    originalPrice: 199.99,
-    rating: 4.8,
-    reviewCount: 1250,
-    isNew: true,
-    isHot: true,
-    discountRate: 50,
-    description:
-      'Comprehensive web development course covering frontend and backend',
-    category: ['Web Development', 'JavaScript', 'React'],
-    language: 'English',
-    lastUpdated: '2024-01-15',
-    syllabus: [],
-    learningOutcomes: [],
-    requirements: [],
-    targetAudience: [],
-    reviews: [],
-    faqs: [],
-  },
-]
+interface Props {
+  courses: ICourse[]
+  title?: ReactNode
+}
 
-function Course() {
+function Course({ courses, title }: Props) {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
   const [selectedLevel, setSelectedLevel] = useState<string>('')
   const [minRating, setMinRating] = useState<number | null>(null)
 
   const allCategories = Array.from(
-    new Set(sampleCourses.flatMap((course) => course.category)),
+    new Set(courses.flatMap((course) => course.category)),
   )
 
-  const filteredCourses = sampleCourses.filter((course) => {
+  const filteredCourses = courses.filter((course) => {
     const matchesSearch = course.title
       .toLowerCase()
       .includes(searchTerm.toLowerCase())
@@ -203,13 +44,13 @@ function Course() {
           onLevelChange={setSelectedLevel}
           selectedCategories={selectedCategories}
           onCategoriesChange={setSelectedCategories}
-          allCategories={['React', 'JavaScript', 'TypeScript']} // 실제 카테고리 목록
+          allCategories={['React', 'JavaScript', 'TypeScript']}
           minRating={minRating}
           onRatingChange={setMinRating}
         />
 
-        {/* Course List Section */}
         <Grid item xs={12} md={9}>
+          {title && <ListDirection title={title} length={courses.length} />}
           {filteredCourses.map((course) => (
             <Box>
               <CourseCard key={course.id} course={course} />

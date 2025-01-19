@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { ReactNode, useState } from 'react'
 import {
   Box,
   Container,
@@ -13,87 +13,18 @@ import { Campaign, NotificationsActive } from '@mui/icons-material'
 import EmptyCard from '../shared/EmptyCard'
 import NoticeListItem from '../notice/NoticeListItem'
 import AlarmListItem from './AlarmListItem'
-import { Notice, Alarm as IAarm } from '@/models/notice'
+import { Notice, Alarm as IAlarm } from '@/models/notice'
 import TabPanel from '../shared/TabPanel'
+import ListDirection from '../shared/ListDirection'
 
-function Alarm() {
+interface Props {
+  alarms: IAlarm[]
+  notices: Notice[]
+  alarmTitle?: ReactNode
+  noticeTitle?: ReactNode
+}
+function Alarm({ alarms, notices, alarmTitle, noticeTitle }: Props) {
   const [value, setValue] = useState(0)
-  const [notices] = useState<Notice[]>([
-    {
-      id: 1,
-      title: 'System Maintenance Notice',
-      content: `We will be performing scheduled system maintenance to improve our services.
-      During this time, all systems will be unavailable.
-      Maintenance Schedule:
-      - Start: January 20, 2024 2:00 AM EST
-      - End: January 20, 2024 4:00 AM EST
-      What to expect:
-      1. Complete system downtime
-      2. Automatic logout of all users
-      3. Temporary service interruption
-      Please save your work and log out before the maintenance begins.
-      We apologize for any inconvenience this may cause.`,
-      category: 'System',
-      date: '2024-01-18',
-      isImportant: true,
-      author: 'System Admin',
-      views: 245,
-      attachments: [
-        { name: 'maintenance_schedule.pdf', size: '524 KB' },
-        { name: 'system_updates.docx', size: '128 KB' },
-      ],
-      isRead: false,
-    },
-    {
-      id: 1,
-      title: 'System Maintenance Notice',
-      content: `We will be performing scheduled system maintenance to improve our services.
-      During this time, all systems will be unavailable.
-      Maintenance Schedule:
-      - Start: January 20, 2024 2:00 AM EST
-      - End: January 20, 2024 4:00 AM EST
-      What to expect:
-      1. Complete system downtime
-      2. Automatic logout of all users
-      3. Temporary service interruption
-      Please save your work and log out before the maintenance begins.
-      We apologize for any inconvenience this may cause.`,
-      category: 'System',
-      date: '2024-01-18',
-      isImportant: true,
-      author: 'System Admin',
-      views: 245,
-      attachments: [
-        { name: 'maintenance_schedule.pdf', size: '524 KB' },
-        { name: 'system_updates.docx', size: '128 KB' },
-      ],
-      isRead: false,
-    },
-  ])
-
-  const [alarms, setAlarms] = useState<IAarm[]>([
-    {
-      id: 1,
-      message: 'Your request has been approved',
-      date: '2024-01-18 15:45',
-      type: 'success',
-      isRead: false,
-    },
-    {
-      id: 2,
-      message: 'New comment on your post',
-      date: '2024-01-18 13:20',
-      type: 'info',
-      isRead: false,
-    },
-    {
-      id: 3,
-      message: 'Please update your password',
-      date: '2024-01-17 11:30',
-      type: 'warning',
-      isRead: true,
-    },
-  ])
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue)
@@ -126,6 +57,9 @@ function Alarm() {
       <TabPanel value={value} index={0}>
         <Card>
           <CardContent>
+            {alarmTitle && (
+              <ListDirection title={alarmTitle} length={alarms.length} />
+            )}
             <List sx={{ width: '100%' }}>
               {alarms.map((alarm, index) => (
                 <Box key={alarm.id} component={'ul'}>
@@ -144,6 +78,9 @@ function Alarm() {
       <TabPanel value={value} index={1}>
         <Card>
           <CardContent>
+            {noticeTitle && (
+              <ListDirection title={noticeTitle} length={notices.length} />
+            )}
             <List>
               {notices.map((notice, index) => (
                 <Box component={'ul'}>

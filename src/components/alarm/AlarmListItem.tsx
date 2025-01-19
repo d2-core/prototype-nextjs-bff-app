@@ -28,7 +28,7 @@ function AlarmListItem({ alarm }: Props) {
 
   return (
     <Box
-      onClick={() => route.push(`/alarm/${alarm.id}`)}
+      onClick={() => route.push(`/alarms/${alarm.id}`)}
       sx={{
         display: 'flex',
         alignItems: 'flex-start',

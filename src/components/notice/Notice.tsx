@@ -1,40 +1,18 @@
-import { useState } from 'react'
+import { ReactNode, useState } from 'react'
 import { Box, Grid, Divider, Card, CardContent } from '@mui/material'
 import EmptyCard from '../shared/EmptyCard'
 import { useRouter } from 'next/router'
 import NoticeListItem from './NoticeListItem'
 import { Notice as INotice } from '@/models/notice'
 import NoticeFilter, { FilterState } from './NoticeFilter'
+import ListDirection from '../shared/ListDirection'
 
-function Notice() {
+interface Props {
+  notices: INotice[]
+  title?: ReactNode
+}
+function Notice({ notices, title }: Props) {
   const route = useRouter()
-  const [notices, setNotices] = useState<INotice[]>([
-    {
-      id: 1,
-      title: 'System Maintenance Notice',
-      content: `We will be performing scheduled system maintenance to improve our services.
-      During this time, all systems will be unavailable.
-      Maintenance Schedule:
-      - Start: January 20, 2024 2:00 AM EST
-      - End: January 20, 2024 4:00 AM EST
-      What to expect:
-      1. Complete system downtime
-      2. Automatic logout of all users
-      3. Temporary service interruption
-      Please save your work and log out before the maintenance begins.
-      We apologize for any inconvenience this may cause.`,
-      category: 'System',
-      date: '2024-01-18',
-      isImportant: true,
-      author: 'System Admin',
-      views: 245,
-      attachments: [
-        { name: 'maintenance_schedule.pdf', size: '524 KB' },
-        { name: 'system_updates.docx', size: '128 KB' },
-      ],
-      isRead: false,
-    },
-  ])
 
   const [filters, setFilters] = useState<FilterState>({
     search: '',
@@ -94,6 +72,7 @@ function Notice() {
           />
         </Grid>
         <Grid item xs={12} md={9}>
+          {title && <ListDirection title={title} length={notices.length} />}
           <Card>
             <CardContent>
               {filteredNotices.map((notice, index) => (

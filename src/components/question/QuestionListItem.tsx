@@ -22,7 +22,7 @@ interface Props {
 function QuestionListItem({ question }: Props) {
   const route = useRouter()
   const handleItemClick = (questionId: number) => {
-    route.push(`/question/${questionId}`)
+    route.push(`/questions/${questionId}`)
   }
   return (
     <Box
@@ -33,12 +33,10 @@ function QuestionListItem({ question }: Props) {
       }}
     >
       <Box display="flex" gap={2}>
-        {/* User Info */}
         <Box display="flex" gap={2}>
           <Avatar src={question.userImage} sx={{ width: 40, height: 40 }} />
         </Box>
 
-        {/* Question Content */}
         <Box flex={1}>
           <Box
             display="flex"

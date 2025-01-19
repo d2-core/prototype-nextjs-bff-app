@@ -12,7 +12,7 @@ function NoticeListItem({ notice }: Props) {
   return (
     <Box>
       <Box
-        onClick={() => route.push(`/notice/${notice.id}`)}
+        onClick={() => route.push(`/notices/${notice.id}`)}
         sx={{ mb: 2, cursor: 'pointer' }}
       >
         <Box display={'flex'} alignItems={'center'} gap={1} mb={1}>

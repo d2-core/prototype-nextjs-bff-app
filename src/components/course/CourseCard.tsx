@@ -20,7 +20,7 @@ interface Props {
 function CourseCard({ course, width }: Props) {
   const route = useRouter()
   const handleCourseDetailRoute = () => {
-    route.push(`course/${course.id}`)
+    route.push(`/courses/${course.id}`)
   }
   return (
     <Card

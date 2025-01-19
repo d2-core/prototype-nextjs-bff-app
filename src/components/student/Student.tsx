@@ -27,7 +27,7 @@ function Student() {
       icon: <QuestionAnswer sx={{ fontSize: 40 }} />,
       count: userStats.questionsCount,
       description: '내가 작성한 질문들을 확인하세요',
-      link: '/my/question',
+      link: '/my/questions',
       color: '#E0B0FF',
     },
     {
@@ -35,7 +35,7 @@ function Student() {
       icon: <RateReview sx={{ fontSize: 40 }} />,
       count: userStats.reviewsCount,
       description: '내가 작성한 강의 리뷰를 확인하세요',
-      link: '/my/review',
+      link: '/my/reviews',
       color: '#4caf50',
     },
     {
@@ -43,7 +43,7 @@ function Student() {
       icon: <School sx={{ fontSize: 40 }} />,
       count: userStats.coursesCount,
       description: '수강 중인 강의를 이어서 학습하세요',
-      link: '/my/course',
+      link: '/my/courses',
       color: '#f44336',
     },
   ]

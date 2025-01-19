@@ -29,266 +29,47 @@ import {
   Update,
 } from '@mui/icons-material'
 import Link from 'next/link'
-import { Course } from '@/models/course'
-import { Review } from '../review/Review'
 import ReviewListItem from '../review/ReviewListItem'
 import ListDirection from '../shared/ListDirection'
+import useUser from '@/hooks/useUser'
+import { useMutation } from 'react-query'
+import { registerCouresStudent } from '@/remote/api/student'
+import { useLoginModalContext } from '@/contexts/LoginModalContext'
+import { useRouter } from 'next/router'
+import { courseDumy, courses, questions, reviews } from '@/utils/dummy'
+import Spacing from '../shared/Spacing'
+import QuestionListItem from '../question/QuestionListItem'
 
 interface Props {
   courseId: number
 }
 
 function CourseDetail({ courseId }: Props) {
-  // In a real application, fetch course data using the ID
-  const course: Course = {
-    id: '1',
-    title: 'Complete React Development with TypeScript',
-    thumbnail: '/images/react-course.jpg',
-    teacherName: 'Dr. Sarah Johnson',
-    teacherImage: '/images/sarah.jpg',
-    teacherId: 'teacher1',
-    level: 'intermediate',
-    price: 129.99,
-    originalPrice: 199.99,
-    rating: 4.8,
-    reviewCount: 350,
-    isHot: true,
-    discountRate: 35,
-    description: 'Master modern React development with TypeScript...',
-    category: ['Programming', 'Web Development', 'Frontend'],
-    language: 'English',
-    lastUpdated: '2024-01-15',
-    duration: {
-      hours: 32,
-      minutes: 45,
+  const { user } = useUser()
+  const { open } = useLoginModalContext()
+  const route = useRouter()
+  const course = courseDumy
+
+  const registerCourseStudentMutation = useMutation(
+    ['register-course-student', course.id],
+    registerCouresStudent,
+    {
+      onSuccess: () => route.push('/my/courses'),
     },
-    totalLessons: 185,
-    enrolled: 2500,
-    syllabus: [
-      {
-        sectionTitle: 'Getting Started with React',
-        lessons: [
-          {
-            id: 'l1',
-            title: 'Introduction to React',
-            duration: '15:30',
-            isFree: true,
-            type: 'video',
-          },
-          {
-            id: 'l2',
-            title: 'Setting up Development Environment',
-            duration: '20:45',
-            type: 'video',
-          },
-        ],
-      },
-      {
-        sectionTitle: 'TypeScript Fundamentals',
-        lessons: [
-          {
-            id: 'l3',
-            title: 'TypeScript Basics Quiz',
-            duration: '30:00',
-            type: 'quiz',
-          },
-        ],
-      },
-      {
-        sectionTitle: 'Getting Started with React',
-        lessons: [
-          {
-            id: 'l1',
-            title: 'Introduction to React',
-            duration: '15:30',
-            isFree: true,
-            type: 'video',
-          },
-          {
-            id: 'l2',
-            title: 'Setting up Development Environment',
-            duration: '20:45',
-            type: 'video',
-          },
-        ],
-      },
-      {
-        sectionTitle: 'TypeScript Fundamentals',
-        lessons: [
-          {
-            id: 'l3',
-            title: 'TypeScript Basics Quiz',
-            duration: '30:00',
-            type: 'quiz',
-          },
-        ],
-      },
-      {
-        sectionTitle: 'Getting Started with React',
-        lessons: [
-          {
-            id: 'l1',
-            title: 'Introduction to React',
-            duration: '15:30',
-            isFree: true,
-            type: 'video',
-          },
-          {
-            id: 'l2',
-            title: 'Setting up Development Environment',
-            duration: '20:45',
-            type: 'video',
-          },
-        ],
-      },
-      {
-        sectionTitle: 'TypeScript Fundamentals',
-        lessons: [
-          {
-            id: 'l3',
-            title: 'TypeScript Basics Quiz',
-            duration: '30:00',
-            type: 'quiz',
-          },
-        ],
-      },
-      {
-        sectionTitle: 'Getting Started with React',
-        lessons: [
-          {
-            id: 'l1',
-            title: 'Introduction to React',
-            duration: '15:30',
-            isFree: true,
-            type: 'video',
-          },
-          {
-            id: 'l2',
-            title: 'Setting up Development Environment',
-            duration: '20:45',
-            type: 'video',
-          },
-        ],
-      },
-      {
-        sectionTitle: 'TypeScript Fundamentals',
-        lessons: [
-          {
-            id: 'l3',
-            title: 'TypeScript Basics Quiz',
-            duration: '30:00',
-            type: 'quiz',
-          },
-        ],
-      },
-      {
-        sectionTitle: 'Getting Started with React',
-        lessons: [
-          {
-            id: 'l1',
-            title: 'Introduction to React',
-            duration: '15:30',
-            isFree: true,
-            type: 'video',
-          },
-          {
-            id: 'l2',
-            title: 'Setting up Development Environment',
-            duration: '20:45',
-            type: 'video',
-          },
-        ],
-      },
-      {
-        sectionTitle: 'TypeScript Fundamentals',
-        lessons: [
-          {
-            id: 'l3',
-            title: 'TypeScript Basics Quiz',
-            duration: '30:00',
-            type: 'quiz',
-          },
-        ],
-      },
-      {
-        sectionTitle: 'Getting Started with React',
-        lessons: [
-          {
-            id: 'l1',
-            title: 'Introduction to React',
-            duration: '15:30',
-            isFree: true,
-            type: 'video',
-          },
-          {
-            id: 'l2',
-            title: 'Setting up Development Environment',
-            duration: '20:45',
-            type: 'video',
-          },
-        ],
-      },
-      {
-        sectionTitle: 'TypeScript Fundamentals',
-        lessons: [
-          {
-            id: 'l3',
-            title: 'TypeScript Basics Quiz',
-            duration: '30:00',
-            type: 'quiz',
-          },
-        ],
-      },
-    ],
-    learningOutcomes: [
-      'Build complex React applications using TypeScript',
-      'Implement state management with Redux Toolkit',
-      'Create reusable custom hooks and components',
-      'Master React performance optimization techniques',
-    ],
-    requirements: [
-      'Basic JavaScript knowledge',
-      'Understanding of HTML and CSS',
-      'Familiarity with web development concepts',
-    ],
-    targetAudience: [
-      'Web developers looking to learn React',
-      'JavaScript developers wanting to transition to TypeScript',
-      'Frontend developers seeking to upgrade their skills',
-    ],
-    features: {
-      certificateProvided: true,
-      lifetimeAccess: true,
-      downloadableResources: 45,
-      liveQA: true,
-      mobileAccess: true,
-      assignments: true,
-    },
-    reviews: [
-      {
-        id: 'r1',
-        userName: 'John Doe',
-        userImage: '/images/john.jpg',
-        rating: 5,
-        date: '2024-01-10',
-        comment: 'Excellent course! The content is well-structured...',
-        helpful: 25,
-      },
-    ],
-    faqs: [
-      {
-        question: 'Is this course suitable for beginners?',
-        answer: 'While some basic JavaScript knowledge is recommended...',
-      },
-    ],
+  )
+
+  const handleRegisterCourseStuent = (courseId: number) => {
+    if (user) {
+      registerCourseStudentMutation.mutate({ courseId: courseId })
+    } else {
+      open()
+    }
   }
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       <Grid container spacing={4}>
-        {/* Main Content Area - Right Side */}
         <Grid item xs={12} md={8}>
-          {/* Course Header */}
           <Paper elevation={3} sx={{ p: 3, mb: 3 }}>
             <Box mb={2}>
               {course.category.map((cat) => (
@@ -334,7 +115,6 @@ function CourseDetail({ courseId }: Props) {
             </Box>
           </Paper>
 
-          {/* Description */}
           <Card sx={{ mb: 3 }}>
             <CardContent>
               <Typography variant="h6" gutterBottom>
@@ -346,7 +126,6 @@ function CourseDetail({ courseId }: Props) {
             </CardContent>
           </Card>
 
-          {/* Learning Outcomes */}
           <Card sx={{ mb: 3 }}>
             <CardContent>
               <Typography variant="h6" gutterBottom>
@@ -365,7 +144,6 @@ function CourseDetail({ courseId }: Props) {
             </CardContent>
           </Card>
 
-          {/* Course Content */}
           <Card sx={{ mb: 3 }}>
             <CardContent>
               <Typography variant="h6" gutterBottom>
@@ -406,21 +184,43 @@ function CourseDetail({ courseId }: Props) {
             </CardContent>
           </Card>
 
-          {/* Reviews */}
           <Card>
             <CardContent>
-              <ListDirection title="강의 리뷰" routePath="/review" />
-              <Grid container spacing={2}>
-                {DUMMY_REVIEWS.slice(0, 5).map((review) => (
-                  <Grid item xs={12} md={12} key={review.id}>
+              <ListDirection
+                title="강의 리뷰"
+                length={reviews.length}
+                routePath={`/courses/${course.id}/reviews`}
+              />
+              <List>
+                {reviews.slice(0, 2).map((review) => (
+                  <Box component={'ul'} key={review.id}>
                     <Card>
                       <CardContent>
                         <ReviewListItem review={review} truncate />
                       </CardContent>
                     </Card>
-                  </Grid>
+                    <Spacing />
+                  </Box>
                 ))}
-              </Grid>
+              </List>
+              <Spacing />
+              <ListDirection
+                title="강의 질문"
+                length={questions.length}
+                routePath={`/courses/${course.id}/questions`}
+              />
+              <List>
+                {questions.slice(0, 2).map((question) => (
+                  <Box component={'ul'} key={question.id}>
+                    <Card>
+                      <CardContent>
+                        <QuestionListItem question={question} />
+                      </CardContent>
+                    </Card>
+                    <Spacing />
+                  </Box>
+                ))}
+              </List>
             </CardContent>
           </Card>
         </Grid>
@@ -451,6 +251,7 @@ function CourseDetail({ courseId }: Props) {
                   )}
                 </Box>
                 <Button
+                  onClick={() => handleRegisterCourseStuent(course.id)}
                   variant="contained"
                   color="primary"
                   fullWidth
@@ -499,72 +300,5 @@ function CourseDetail({ courseId }: Props) {
     </Container>
   )
 }
-
-const DUMMY_REVIEWS: Review[] = [
-  {
-    id: '1',
-    userName: 'John Smith',
-    userImage: 'https://api.dicebear.com/7.x/avataaars/svg?seed=1',
-    rating: 4.5,
-    date: '2024-01-15',
-    comment:
-      'This React course is exceptional! The instructor breaks down complex concepts into digestible pieces. The practical projects really helped solidify my understanding. Highly recommended for anyone looking to master React and TypeScript.',
-    helpful: 42,
-    courseName: 'Complete React Development with TypeScript',
-    courseCategory: 'Programming',
-    verified: true,
-  },
-  {
-    id: '2',
-    userName: 'Emma Wilson',
-    userImage: 'https://api.dicebear.com/7.x/avataaars/svg?seed=2',
-    rating: 5,
-    date: '2024-01-14',
-    comment: `The best UX design course I've taken so far. The assignments were challenging but very practical. I've already started applying what I learned in my daily work. The instructor's feedback was always constructive and helpful.'`,
-    helpful: 38,
-    courseName: 'Advanced UX Design Principles',
-    courseCategory: 'Design',
-    verified: true,
-  },
-  {
-    id: '3',
-    userName: 'Michael Chen',
-    userImage: 'https://api.dicebear.com/7.x/avataaars/svg?seed=3',
-    rating: 3.5,
-    date: '2024-01-13',
-    comment:
-      'Good content but the pace was a bit fast for beginners. Would appreciate more practical examples. The course materials were comprehensive though, and the community support was helpful.',
-    helpful: 15,
-    courseName: 'Digital Marketing Fundamentals',
-    courseCategory: 'Marketing',
-    verified: false,
-  },
-  {
-    id: '4',
-    userName: 'Sarah Johnson',
-    userImage: 'https://api.dicebear.com/7.x/avataaars/svg?seed=4',
-    rating: 5,
-    date: '2024-01-12',
-    comment:
-      'Incredible value for money! The business strategy frameworks taught in this course have completely changed how I approach my work. The case studies were particularly enlightening.',
-    helpful: 56,
-    courseName: 'Strategic Business Management',
-    courseCategory: 'Business',
-    verified: true,
-  },
-  {
-    id: '5',
-    userName: 'David Kim',
-    userImage: 'https://api.dicebear.com/7.x/avataaars/svg?seed=5',
-    rating: 4,
-    date: '2024-01-11',
-    comment:
-      'The Python programming section was excellent, especially the data analysis modules. However, I wish there were more advanced topics covered. Great for beginners and intermediate learners.',
-    helpful: 28,
-    courseName: 'Python for Data Science',
-    courseCategory: 'Programming',
-    verified: true,
-  },
-]
 
 export default CourseDetail

@@ -1,13 +1,11 @@
 import {
   Box,
   Container,
-  Grid,
   Typography,
   Card,
   CardContent,
   Button,
   Avatar,
-  Divider,
   TextField,
   IconButton,
   Chip,
@@ -33,88 +31,15 @@ import {
 } from '@mui/icons-material'
 import { useState } from 'react'
 import Link from 'next/link'
-
-// 더미 질문 데이터
-const QUESTION_DATA = {
-  id: '1',
-  title: 'How to implement custom hooks with TypeScript?',
-  content: `I'm working on a React project with TypeScript and I'm trying to create a custom hook for form validation. I'm having some trouble with the TypeScript types.
-
-Here's what I've tried so far:
-
-\`\`\`typescript
-function useFormValidation<T>(initialState: T) {
-  // Implementation here
-}
-\`\`\`
-
-Can someone explain how to properly type the return values and handle generic types in custom hooks?`,
-  userName: 'Alex Kim',
-  userImage: 'https://api.dicebear.com/7.x/avataaars/svg?seed=1',
-  date: '2024-01-15',
-  courseName: 'Advanced React Development',
-  courseCategory: 'Programming',
-  likes: 15,
-  isLiked: false,
-  isBookmarked: false,
-  tags: ['react', 'typescript', 'hooks'],
-  isAnswered: true,
-  isInstructor: false,
-  views: 234,
-}
-
-// 더미 답변 데이터
-const ANSWERS_DATA = [
-  {
-    id: 'a1',
-    userName: 'Sarah Johnson',
-    userImage: 'https://api.dicebear.com/7.x/avataaars/svg?seed=2',
-    content: `Here's an example of how you can implement a custom hook with TypeScript:
-
-\`\`\`typescript
-interface FormState {
-  values: Record<string, any>;
-  errors: Record<string, string>;
-}
-
-function useFormValidation<T extends Record<string, any>>(initialValues: T) {
-  const [values, setValues] = useState<T>(initialValues);
-  const [errors, setErrors] = useState<Record<string, string>>({});
-
-  // Implementation details...
-
-  return { values, errors, handleChange, handleSubmit };
-}
-\`\`\`
-
-The key is to use generic types to maintain type safety throughout your form handling logic.`,
-    date: '2024-01-15',
-    likes: 8,
-    isLiked: false,
-    isInstructor: true,
-    isAccepted: true,
-  },
-  {
-    id: 'a2',
-    userName: 'Mike Chen',
-    userImage: 'https://api.dicebear.com/7.x/avataaars/svg?seed=3',
-    content:
-      'Another approach would be to use a validation schema library like Zod or Yup...',
-    date: '2024-01-16',
-    likes: 3,
-    isLiked: false,
-    isInstructor: false,
-    isAccepted: false,
-  },
-]
+import { answersDumy, questionDumy, questions } from '@/utils/dummy'
 
 interface Props {
   questionId: number
 }
 
 function QuestionDetail({ questionId }: Props) {
-  const [question, setQuestion] = useState(QUESTION_DATA)
-  const [answers, setAnswers] = useState(ANSWERS_DATA)
+  const [question, setQuestion] = useState(questionDumy)
+  const [answers, setAnswers] = useState(answersDumy)
   const [newAnswer, setNewAnswer] = useState('')
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
