@@ -1,5 +1,5 @@
 export interface Course {
-  id: string
+  id: number
   title: string
   thumbnail: string
   teacherName: string
@@ -17,6 +17,7 @@ export interface Course {
   category: string[]
   language: string
   lastUpdated: string
+  progress: number
   duration?: {
     hours: number
     minutes: number

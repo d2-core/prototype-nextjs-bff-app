@@ -1,5 +1,5 @@
 export interface Teacher {
-  id: string
+  id: number
   name: string
   profileImage: string
   role: string
