@@ -21,13 +21,14 @@ function Teacher({ teachers, title }: Props) {
   )
 
   const filteredTeachers = teachers.filter((teacher) => {
-    const matchesSearch = teacher.name
+    const matchesSearch = teacher.nickname
       .toLowerCase()
       .includes(searchTerm.toLowerCase())
     const matchesExpertise =
       selectedExpertise.length === 0 ||
       selectedExpertise.some((exp) => teacher.expertise.includes(exp))
-    const matchesRating = !minRating || teacher.rating >= minRating
+    const matchesRating =
+      !minRating || teacher.statics.courseTotalAverageRatings >= minRating
 
     return matchesSearch && matchesExpertise && matchesRating
   })

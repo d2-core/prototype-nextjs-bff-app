@@ -54,22 +54,25 @@ function TeacherDetail({ teacherId }: Props) {
             <CardContent>
               <Grid container spacing={3} alignItems="center">
                 <Grid item>
-                  <Avatar
-                    src={teacher.profileImage}
+                  <Box
+                    component={'img'}
+                    src={teacher.profileImageUrl}
+                    alt={teacher.nickname}
                     sx={{ width: 120, height: 120 }}
                   />
                 </Grid>
                 <Grid item xs>
                   <Typography variant="h4" gutterBottom>
-                    {teacher.name}
-                  </Typography>
-                  <Typography variant="h6" color="textSecondary" gutterBottom>
-                    {teacher.role}
+                    {teacher.nickname}
                   </Typography>
                   <Box display="flex" alignItems="center" gap={1} mb={2}>
-                    <Rating value={teacher.rating} readOnly precision={0.1} />
+                    <Rating
+                      value={teacher.statics.courseTotalAverageRatings}
+                      readOnly
+                      precision={0.1}
+                    />
                     <Typography variant="body2">
-                      ({teacher.reviews} reviews)
+                      ({teacher.statics.totalReviewCount} reviews)
                     </Typography>
                   </Box>
                   <Box display="flex" gap={1}>
@@ -167,11 +170,15 @@ function TeacherDetail({ teacherId }: Props) {
               </Typography>
               <Grid container spacing={2}>
                 <Grid item xs={6}>
-                  <Typography variant="h4">{teacher.courses}</Typography>
+                  <Typography variant="h4">
+                    {teacher.statics.courseCount}
+                  </Typography>
                   <Typography color="textSecondary">Courses</Typography>
                 </Grid>
                 <Grid item xs={6}>
-                  <Typography variant="h4">{teacher.students}</Typography>
+                  <Typography variant="h4">
+                    {teacher.statics.sutdentCount}
+                  </Typography>
                   <Typography color="textSecondary">Students</Typography>
                 </Grid>
               </Grid>

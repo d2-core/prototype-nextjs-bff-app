@@ -5,7 +5,6 @@ import {
   Button,
   Card,
   CardContent,
-  CardMedia,
   Chip,
   Divider,
   Grid,
@@ -35,20 +34,17 @@ function TeacherCard({ teacher }: Props) {
         cursor: 'pointer',
       }}
     >
-      <CardMedia
+      <Box
         component="img"
         height="240"
-        image={teacher.profileImage}
-        alt={teacher.name}
+        src={teacher.profileImageUrl}
+        alt={teacher.nickname}
         sx={{ objectFit: 'cover' }}
       />
 
       <CardContent sx={{ flexGrow: 1 }}>
         <Typography variant="h6" gutterBottom>
-          {teacher.name}
-        </Typography>
-        <Typography variant="subtitle2" color="primary" gutterBottom>
-          {teacher.role}
+          {teacher.nickname}
         </Typography>
 
         <Box sx={{ my: 2 }}>
@@ -90,21 +86,29 @@ function TeacherCard({ teacher }: Props) {
             <Typography variant="subtitle2" color="text.secondary">
               개설 강좌
             </Typography>
-            <Typography variant="h6">{teacher.courses}개</Typography>
+            <Typography variant="h6">
+              {teacher.statics.courseCount}개
+            </Typography>
           </Grid>
           <Grid item xs={6}>
             <Typography variant="subtitle2" color="text.secondary">
               수강생
             </Typography>
-            <Typography variant="h6">{teacher.students}명</Typography>
+            <Typography variant="h6">
+              {teacher.statics.sutdentCount}명
+            </Typography>
           </Grid>
         </Grid>
 
         <Box sx={{ mb: 2 }}>
           <Box display={'flex'} alignItems={'center'} gap={1}>
-            <Rating value={teacher.rating} readOnly precision={0.1} />
+            <Rating
+              value={teacher.statics.courseTotalAverageRatings}
+              readOnly
+              precision={0.1}
+            />
             <Typography variant="body2" color="text.secondary">
-              ({teacher.reviews} 리뷰)
+              ({teacher.statics.totalReviewCount} 리뷰)
             </Typography>
           </Box>
         </Box>
