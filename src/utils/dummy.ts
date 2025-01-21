@@ -7,28 +7,163 @@ import { Teacher } from '@/models/teacher'
 export const teachers: Teacher[] = [
   {
     id: 1,
-    name: 'John Doe',
-    profileImage: '/profile1.jpg',
-    role: 'Senior Developer',
-    expertise: ['React', 'TypeScript', 'Node.js'],
-    experience: ['10+ years in web development', 'Former Tech Lead at Google'],
+    nickname: '테크마스터',
+    profileImageUrl: 'https://example.com/images/tech-master.jpg',
+    expertise: ['웹 개발', 'React', 'TypeScript', 'Node.js'],
+    experience: [
+      '네이버 프론트엔드 개발자 (2018-2022)',
+      '카카오 시니어 개발자 (2022-현재)',
+      '패스트캠퍼스 React 강의 출강',
+    ],
     description:
-      'Passionate about teaching web development and helping others grow.',
-    courses: 5,
-    students: 1200,
-    rating: 4.8,
-    reviews: 150,
-    socialLinks: {
-      linkedin: 'https://linkedin.com',
-      github: 'https://github.com',
-      website: 'https://example.com',
+      '10년차 프론트엔드 개발자이자 3년차 온라인 강사입니다. 복잡한 개념을 쉽게 설명하는 것을 좋아합니다.',
+    statics: {
+      courseCount: 12,
+      sutdentCount: 1500,
+      courseTotalAverageRatings: 4.8,
+      totalReviewCount: 850,
     },
-    education: [],
-    certificates: [],
-    languages: [],
-    achievements: [],
-    upcomingCourses: [],
-    availableTimeSlots: [],
+    education: [
+      {
+        degree: '컴퓨터공학 학사',
+        institution: '서울대학교',
+        year: 2015,
+      },
+      {
+        degree: '소프트웨어공학 석사',
+        institution: 'KAIST',
+        year: 2017,
+      },
+    ],
+    certificates: [
+      {
+        name: 'AWS Certified Solutions Architect',
+        issuer: 'Amazon Web Services',
+        year: 2023,
+      },
+      {
+        name: 'Microsoft Certified: Azure Developer Associate',
+        issuer: 'Microsoft',
+        year: 2022,
+      },
+    ],
+    achievements: [
+      '2023 한국 소프트웨어 개발자 대상 수상',
+      'React Korea 컨퍼런스 키노트 스피커',
+      '개발 유튜브 채널 구독자 50,000명 달성',
+    ],
+    socialLinks: {
+      linkedin: 'https://linkedin.com/in/techmaster',
+      github: 'https://github.com/techmaster',
+      website: 'https://techmaster.dev',
+      youtube: 'https://youtube.com/@techmaster',
+    },
+  },
+  {
+    id: 2,
+    nickname: '데이터사이언티스트',
+    profileImageUrl: 'https://example.com/images/data-scientist.jpg',
+    expertise: ['데이터 분석', 'Python', 'Machine Learning', 'Deep Learning'],
+    experience: [
+      '삼성전자 AI 센터 연구원 (2019-2023)',
+      'SK AI 연구소 선임연구원 (2023-현재)',
+      '인프런 머신러닝 강좌 제작',
+    ],
+    description:
+      'AI와 머신러닝을 연구하고 가르치는 것을 즐기는 연구원입니다. 누구나 이해할 수 있는 AI 교육을 지향합니다.',
+    statics: {
+      courseCount: 8,
+      sutdentCount: 2200,
+      courseTotalAverageRatings: 4.9,
+      totalReviewCount: 1200,
+    },
+    education: [
+      {
+        degree: '통계학 학사',
+        institution: '고려대학교',
+        year: 2016,
+      },
+      {
+        degree: '인공지능 박사',
+        institution: '연세대학교',
+        year: 2019,
+      },
+    ],
+    certificates: [
+      {
+        name: 'TensorFlow Developer Certificate',
+        issuer: 'Google',
+        year: 2023,
+      },
+      {
+        name: 'Deep Learning Specialization',
+        issuer: 'Coursera',
+        year: 2022,
+      },
+    ],
+    achievements: [
+      '2023 국제 AI 컨퍼런스 우수 논문상',
+      "AI 교육 플랫폼 '모두의 AI' 설립",
+      'AI 관련 도서 2권 출간',
+    ],
+    socialLinks: {
+      linkedin: 'https://linkedin.com/in/datascientist',
+      github: 'https://github.com/datascientist',
+      twitter: 'https://twitter.com/datascientist',
+    },
+  },
+  {
+    id: 3,
+    nickname: 'UX디자인프로',
+    profileImageUrl: 'https://example.com/images/ux-designer.jpg',
+    expertise: ['UX/UI 디자인', 'Figma', 'Adobe XD', '디자인 시스템'],
+    experience: [
+      '토스 UX 디자이너 (2020-2023)',
+      '당근마켓 시니어 디자이너 (2023-현재)',
+      '디자인 컨설팅 회사 운영',
+    ],
+    description:
+      '사용자 중심의 디자인을 추구하는 UX 디자이너입니다. 10년간의 실무 경험을 바탕으로 실전적인 디자인 교육을 제공합니다.',
+    statics: {
+      courseCount: 6,
+      sutdentCount: 980,
+      courseTotalAverageRatings: 4.7,
+      totalReviewCount: 420,
+    },
+    education: [
+      {
+        degree: '시각디자인 학사',
+        institution: '홍익대학교',
+        year: 2014,
+      },
+      {
+        degree: 'UX 디자인 석사',
+        institution: '파슨스 디자인 스쿨',
+        year: 2016,
+      },
+    ],
+    certificates: [
+      {
+        name: 'Google UX Design Certificate',
+        issuer: 'Google',
+        year: 2023,
+      },
+      {
+        name: 'Certified Usability Analyst',
+        issuer: 'Human Factors International',
+        year: 2022,
+      },
+    ],
+    achievements: [
+      '2023 레드닷 디자인 어워드 수상',
+      'UX 디자인 베스트셀러 저자',
+      '디자인 전문 유튜브 채널 운영',
+    ],
+    socialLinks: {
+      website: 'https://uxdesignpro.com',
+      youtube: 'https://youtube.com/@uxdesignpro',
+      twitter: 'https://twitter.com/uxdesignpro',
+    },
   },
 ]
 
