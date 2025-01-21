@@ -1,13 +1,44 @@
 import { Avatar, Box, Button, Chip, Rating, Typography } from '@mui/material'
 import { ThumbUp } from '@mui/icons-material'
 import { Review } from '@/models/review'
+import Spacing from '../shared/Spacing'
+import useUser from '@/hooks/useUser'
+import { useAlertContext } from '@/contexts/AlertContext'
+import { MouseEvent } from 'react'
+import { useQueryClient } from 'react-query'
+import { useRouter } from 'next/router'
 
 interface Props {
   review: Review
   truncate?: boolean
+  hideDelete?: boolean
 }
 
-function ReviewListItem({ review, truncate }: Props) {
+function ReviewListItem({ review, truncate, hideDelete = false }: Props) {
+  const { user } = useUser()
+  const { open } = useAlertContext()
+  const queryClient = useQueryClient()
+
+  const handleHelpful = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    e.stopPropagation()
+    console.log(review.id)
+    // queryClient
+  }
+  const handleDleete = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    e.stopPropagation()
+    open({
+      title: '삭제 확인',
+      description: '이 항목을 삭제하시겠습니까?',
+      primaryButtonLabel: '삭제',
+      secondaryButtonLabel: '취소',
+      onPrimaryButtonClick: () => {
+        console.log(review.id)
+        // queryClient
+      },
+    })
+  }
   return (
     <Box key={review.id}>
       <Box display="flex" gap={3} mb={3}>
@@ -46,8 +77,6 @@ function ReviewListItem({ review, truncate }: Props) {
             </Typography>
           </Box>
         </Box>
-
-        {/* Review Content */}
         <Box flex={1}>
           <Box display="flex" alignItems="center" gap={1} mb={1}>
             <Rating
@@ -94,10 +123,25 @@ function ReviewListItem({ review, truncate }: Props) {
           >
             {review.comment}
           </Typography>
-          <Box display="flex" alignItems="center" gap={2}>
-            <Button size="small" startIcon={<ThumbUp />}>
+          <Spacing size={8} />
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent={'space-between'}
+          >
+            <Button
+              size="small"
+              startIcon={<ThumbUp />}
+              onClick={handleHelpful}
+            >
               Helpful ({review.helpful})
             </Button>
+
+            {hideDelete === false && user?.id === review.userId && (
+              <Button size="small" onClick={handleDleete}>
+                삭제하기
+              </Button>
+            )}
           </Box>
         </Box>
       </Box>
