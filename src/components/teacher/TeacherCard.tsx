@@ -1,25 +1,22 @@
 import { Teacher } from '@/models/teacher'
-import { GitHub, Language, LinkedIn } from '@mui/icons-material'
 import {
   Box,
-  Button,
   Card,
   CardContent,
   Chip,
   Divider,
   Grid,
-  IconButton,
   Rating,
-  Stack,
   Typography,
 } from '@mui/material'
 import { useRouter } from 'next/router'
 
 interface Props {
   teacher: Teacher
+  width?: string
 }
 
-function TeacherCard({ teacher }: Props) {
+function TeacherCard({ teacher, width }: Props) {
   const route = useRouter()
   const handleTeacherDetailRoute = () => {
     route.push(`/teachers/${teacher.id}`)
@@ -32,11 +29,12 @@ function TeacherCard({ teacher }: Props) {
         flexDirection: 'column',
         transition: 'transform 0.2s',
         cursor: 'pointer',
+        width: width ?? '100%',
       }}
     >
       <Box
         component="img"
-        height="240"
+        minHeight={'240px'}
         src={teacher.profileImageUrl}
         alt={teacher.nickname}
         sx={{ objectFit: 'cover' }}
@@ -47,38 +45,6 @@ function TeacherCard({ teacher }: Props) {
           {teacher.nickname}
         </Typography>
 
-        <Box sx={{ my: 2 }}>
-          {teacher.expertise.map((exp) => (
-            <Chip
-              key={exp}
-              label={exp}
-              size="small"
-              sx={{ mr: 0.5, mb: 0.5 }}
-            />
-          ))}
-        </Box>
-
-        <Box sx={{ mb: 2 }}>
-          {teacher.experience.map((exp, index) => (
-            <Typography
-              key={index}
-              variant="body2"
-              color="text.secondary"
-              sx={{
-                mb: 0.5,
-                display: 'flex',
-                alignItems: 'center',
-                '&:before': {
-                  content: '"•"',
-                  marginRight: 1,
-                },
-              }}
-            >
-              {exp}
-            </Typography>
-          ))}
-        </Box>
-
         <Divider sx={{ my: 2 }} />
 
         <Grid container spacing={2} sx={{ mb: 2 }}>
@@ -87,7 +53,7 @@ function TeacherCard({ teacher }: Props) {
               개설 강좌
             </Typography>
             <Typography variant="h6">
-              {teacher.statics.courseCount}개
+              {teacher.statics?.courseCount}개
             </Typography>
           </Grid>
           <Grid item xs={6}>
@@ -95,7 +61,7 @@ function TeacherCard({ teacher }: Props) {
               수강생
             </Typography>
             <Typography variant="h6">
-              {teacher.statics.sutdentCount}명
+              {teacher.statics?.sutdentCount}명
             </Typography>
           </Grid>
         </Grid>
@@ -103,42 +69,26 @@ function TeacherCard({ teacher }: Props) {
         <Box sx={{ mb: 2 }}>
           <Box display={'flex'} alignItems={'center'} gap={1}>
             <Rating
-              value={teacher.statics.courseTotalAverageRatings}
+              value={teacher.statics?.courseTotalAverageRatings}
               readOnly
               precision={0.1}
             />
             <Typography variant="body2" color="text.secondary">
-              ({teacher.statics.totalReviewCount} 리뷰)
+              ({teacher.statics?.totalReviewCount} 리뷰)
             </Typography>
           </Box>
         </Box>
 
-        <Box sx={{ mb: 2 }}>
-          {teacher.socialLinks?.linkedin && (
-            <IconButton size="small" href={teacher.socialLinks.linkedin}>
-              <LinkedIn />
-            </IconButton>
-          )}
-          {teacher.socialLinks?.github && (
-            <IconButton size="small" href={teacher.socialLinks.github}>
-              <GitHub />
-            </IconButton>
-          )}
-          {teacher.socialLinks?.website && (
-            <IconButton size="small" href={teacher.socialLinks.website}>
-              <Language />
-            </IconButton>
-          )}
+        <Box sx={{ my: 2 }}>
+          {teacher.expertises.map((exp) => (
+            <Chip
+              key={exp}
+              label={exp}
+              size="small"
+              sx={{ mr: 0.5, mb: 0.5 }}
+            />
+          ))}
         </Box>
-
-        <Stack direction="row" spacing={1}>
-          <Button variant="contained" fullWidth>
-            프로필 보기
-          </Button>
-          <Button variant="outlined" fullWidth>
-            상담 신청
-          </Button>
-        </Stack>
       </CardContent>
     </Card>
   )
