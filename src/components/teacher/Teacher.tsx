@@ -17,20 +17,15 @@ function Teacher({ teachers, title }: Props) {
   const [minRating, setMinRating] = useState<number | null>(null)
 
   const allExpertise = Array.from(
-    new Set(teachers.flatMap((teacher) => teacher.expertise)),
+    new Set(teachers.flatMap((teacher) => teacher.expertises)),
   )
 
   const filteredTeachers = teachers.filter((teacher) => {
     const matchesSearch = teacher.nickname
       .toLowerCase()
       .includes(searchTerm.toLowerCase())
-    const matchesExpertise =
-      selectedExpertise.length === 0 ||
-      selectedExpertise.some((exp) => teacher.expertise.includes(exp))
-    const matchesRating =
-      !minRating || teacher.statics.courseTotalAverageRatings >= minRating
 
-    return matchesSearch && matchesExpertise && matchesRating
+    return matchesSearch
   })
   const handleSearchChange = (value: string) => {
     setSearchTerm(value)
