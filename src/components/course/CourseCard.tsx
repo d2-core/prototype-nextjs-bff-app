@@ -1,109 +1,106 @@
-import { Course } from '@/models/course'
-import { BookmarkBorder, PlayCircleOutline } from '@mui/icons-material'
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  CardMedia,
-  Chip,
-  Rating,
-  Typography,
-} from '@mui/material'
+import { TeacherCourse } from '@/models/teacher'
+import { Bookmark, BookmarkBorder } from '@mui/icons-material'
+import { Box, Card, CardContent, Chip, Rating, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
+import Spacing from '../shared/Spacing'
+import CouresPreviewMenu from './CoursePreviewMenu'
 
 interface Props {
-  course: Course
+  teacherCourse: TeacherCourse
   width?: string
 }
 
-function CourseCard({ course, width }: Props) {
+function CourseCard({ teacherCourse, width }: Props) {
   const route = useRouter()
   const handleCourseDetailRoute = () => {
-    route.push(`/courses/${course.id}`)
+    route.push(`/courses/${teacherCourse.id}`)
   }
+
   return (
     <Card
       onClick={handleCourseDetailRoute}
       sx={{
         width: width ?? '100%',
         flexShrink: 0,
-        mr: 2,
         transition: 'transform 0.2s',
         cursor: 'pointer',
       }}
     >
       <Box sx={{ position: 'relative' }}>
-        <CardMedia
-          component="img"
-          height="160"
-          image={course.thumbnail}
-          alt={course.title}
+        <Box
+          component={'img'}
+          src={teacherCourse.imageUrls[0]}
+          alt={teacherCourse.title}
+          width={'100%'}
+          height="160px"
+          sx={{ objectFit: 'cover' }}
         />
-        <Button
-          variant="contained"
-          startIcon={<PlayCircleOutline />}
-          size="small"
-          sx={{
-            position: 'absolute',
-            bottom: 8,
-            right: 8,
-            bgcolor: 'rgba(0,0,0,0.6)',
-            '&:hover': { bgcolor: 'rgba(0,0,0,0.8)' },
-          }}
-        >
-          미리보기
-        </Button>
+
+        {teacherCourse.previewLectures.length > 0 && (
+          <CouresPreviewMenu teacherCourse={teacherCourse} />
+        )}
+
+        {teacherCourse.appUser?.isBookmark === true ? (
+          <Bookmark
+            sx={{
+              position: 'absolute',
+              top: 8,
+              right: 8,
+              color: 'white',
+            }}
+          />
+        ) : (
+          <BookmarkBorder
+            sx={{
+              position: 'absolute',
+              top: 8,
+              right: 8,
+              color: 'white',
+            }}
+          />
+        )}
       </Box>
 
       <CardContent>
-        <Box display={'flex'} gap={1} alignItems={'center'} mb={1}>
-          <Chip
-            label={course.level}
-            size="small"
-            color={
-              course.level === 'beginner'
-                ? 'success'
-                : course.level === 'intermediate'
-                  ? 'warning'
-                  : 'error'
-            }
-          />
-          {course.isNew && <Chip label="New" size="small" color="primary" />}
-        </Box>
-
         <Typography variant="subtitle1" gutterBottom noWrap>
-          {course.title}
+          {teacherCourse.title}
         </Typography>
 
         <Box display={'flex'} gap={1} alignItems={'center'} mb={1}>
           <Box
             component="img"
-            src={course.teacherImage}
-            alt={course.teacherName}
+            src={teacherCourse?.teacher?.imageUrl}
+            alt={teacherCourse?.teacher?.nickname}
             sx={{ width: 24, height: 24, borderRadius: '50%' }}
           />
           <Typography variant="body2" color="text.secondary">
-            {course.teacherName}
+            {teacherCourse?.teacher?.nickname}
           </Typography>
         </Box>
 
         <Box display={'flex'} gap={1} alignItems={'center'} mb={1}>
-          <Rating value={course.rating} readOnly precision={0.1} size="small" />
+          <Rating
+            value={teacherCourse?.statics?.reviewAverageRating}
+            readOnly
+            precision={0.1}
+            size="small"
+          />
           <Typography variant="body2" color="text.secondary">
-            ({course.reviewCount})
+            ({teacherCourse?.statics?.reviewCount})
           </Typography>
         </Box>
-
-        <Box
-          display={'flex'}
-          alignItems={'center'}
-          justifyContent={'space-between'}
-        >
-          <Typography variant="h6" color="primary">
-            {course.price.toLocaleString()}원
-          </Typography>
-          <BookmarkBorder />
+        <Typography variant="h6" color="primary">
+          {teacherCourse.price !== 0
+            ? `${teacherCourse?.price?.toLocaleString()}원`
+            : `무료`}
+        </Typography>
+        <Spacing size={4} />
+        <Box display={'flex'} gap={1} alignItems={'center'} mb={1}>
+          <Chip label={teacherCourse.courseLevelName} size="small" />
+          {teacherCourse.tags.map((tag) => (
+            <Chip label={tag} size="small" />
+          ))}
+          {/* {course.isNew && <Chip label="New" size="small" color="primary" />} */}
         </Box>
       </CardContent>
     </Card>

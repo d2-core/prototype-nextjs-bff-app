@@ -1,37 +1,27 @@
-import { Box, Container, Grid, Typography } from '@mui/material'
+import { Box, Container, Grid } from '@mui/material'
 import { ReactNode, useState } from 'react'
 import CourseCard from './CourseCard'
-import { Course as ICourse } from '@models/course'
 import Spacing from '../shared/Spacing'
 import CourseFilter from './CourseFilter'
 import ListDirection from '../shared/ListDirection'
+import { TeacherCourse } from '@/models/teacher'
 
 interface Props {
-  courses: ICourse[]
+  teacherCourses: TeacherCourse[]
   title?: ReactNode
 }
 
-function Course({ courses, title }: Props) {
+function Course({ teacherCourses, title }: Props) {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
   const [selectedLevel, setSelectedLevel] = useState<string>('')
   const [minRating, setMinRating] = useState<number | null>(null)
 
-  const allCategories = Array.from(
-    new Set(courses.flatMap((course) => course.category)),
-  )
+  const filteredCourses = teacherCourses.filter((teacherCourse) => {
+    const matchesSearch =
+      teacherCourse.title ?? ''.toLowerCase().includes(searchTerm.toLowerCase())
 
-  const filteredCourses = courses.filter((course) => {
-    const matchesSearch = course.title
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase())
-    const matchesCategories =
-      selectedCategories.length === 0 ||
-      selectedCategories.some((cat) => course.category.includes(cat))
-    const matchesLevel = !selectedLevel || course.level === selectedLevel
-    const matchesRating = !minRating || course.rating >= minRating
-
-    return matchesSearch && matchesCategories && matchesLevel && matchesRating
+    return matchesSearch
   })
 
   return (
@@ -50,10 +40,15 @@ function Course({ courses, title }: Props) {
         />
 
         <Grid item xs={12} md={9}>
-          {title && <ListDirection title={title} length={courses.length} />}
-          {filteredCourses.map((course) => (
+          {title && (
+            <ListDirection title={title} length={teacherCourses.length} />
+          )}
+          {filteredCourses.map((teacherCourse) => (
             <Box>
-              <CourseCard key={course.id} course={course} />
+              <CourseCard
+                key={teacherCourse.id}
+                teacherCourse={teacherCourse}
+              />
               <Spacing />
             </Box>
           ))}

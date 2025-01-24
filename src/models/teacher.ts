@@ -1,17 +1,19 @@
+import { PreviewLecture } from './lecture'
+
 export interface Teacher {
   id: number
   nickname: string
   profileImageUrl: string
-  expertise: string[]
-  experience: string[]
+  expertises: string[]
+  experiences: string[]
   description: string
-  statics: {
+  statics?: {
     courseCount: number
     sutdentCount: number
     courseTotalAverageRatings: number
     totalReviewCount: number
   }
-  education: {
+  educations: {
     degree: string
     institution: string
     year: number
@@ -28,5 +30,30 @@ export interface Teacher {
     website?: string
     twitter?: string
     youtube?: string
+  }
+}
+
+export interface TeacherCourse {
+  id?: number
+  imageUrls: string[]
+  title?: string
+  tags: string[]
+  price?: number
+  courseLevelName?: string
+  courseCategoryName?: string
+  isNew?: boolean
+  isUpdated?: boolean
+  appUser?: {
+    isBookmark?: boolean
+  }
+  teacher?: {
+    id?: number
+    imageUrl?: string
+    nickname?: string
+  }
+  previewLectures: PreviewLecture[]
+  statics?: {
+    reviewAverageRating?: number
+    reviewCount?: number
   }
 }

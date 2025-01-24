@@ -1,16 +1,17 @@
 import { Box, Typography } from '@mui/material'
 import ScrollControl from '../shared/ScrollControl'
 import CourseCard from './CourseCard'
-import { Course } from '@/models/course'
+import { TeacherCourse } from '@/models/teacher'
+import Spacing from '../shared/Spacing'
 
 interface Props {
   title: string
-  courses: Course[]
+  teacherCourses: TeacherCourse[]
   scrollRef: React.RefObject<HTMLDivElement>
   onScroll: (direction: 'left' | 'right') => void
 }
 
-function CourseSideList({ title, courses, scrollRef, onScroll }: Props) {
+function CourseSideList({ title, teacherCourses, scrollRef, onScroll }: Props) {
   return (
     <Box sx={{ mb: 6 }}>
       <Box
@@ -40,8 +41,15 @@ function CourseSideList({ title, courses, scrollRef, onScroll }: Props) {
           pb: 2,
         }}
       >
-        {courses.map((course) => (
-          <CourseCard key={course.id} course={course} width="300px" />
+        {teacherCourses.map((teacherCourse) => (
+          <Box display={'flex'}>
+            <CourseCard
+              key={teacherCourse.id}
+              teacherCourse={teacherCourse}
+              width="300px"
+            />
+            <Spacing direction="horizontal" />
+          </Box>
         ))}
       </Box>
     </Box>

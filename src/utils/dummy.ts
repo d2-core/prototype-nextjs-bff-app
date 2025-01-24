@@ -1,16 +1,17 @@
 import { Course } from '@/models/course'
+import { Lecture } from '@/models/lecture'
 import { Alarm } from '@/models/notice'
 import { Question } from '@/models/question'
 import { Review } from '@/models/review'
-import { Teacher } from '@/models/teacher'
+import { Teacher, TeacherCourse } from '@/models/teacher'
 
 export const teachers: Teacher[] = [
   {
     id: 1,
     nickname: '테크마스터',
     profileImageUrl: 'https://example.com/images/tech-master.jpg',
-    expertise: ['웹 개발', 'React', 'TypeScript', 'Node.js'],
-    experience: [
+    expertises: ['웹 개발', 'React', 'TypeScript', 'Node.js'],
+    experiences: [
       '네이버 프론트엔드 개발자 (2018-2022)',
       '카카오 시니어 개발자 (2022-현재)',
       '패스트캠퍼스 React 강의 출강',
@@ -23,7 +24,7 @@ export const teachers: Teacher[] = [
       courseTotalAverageRatings: 4.8,
       totalReviewCount: 850,
     },
-    education: [
+    educations: [
       {
         degree: '컴퓨터공학 학사',
         institution: '서울대학교',
@@ -63,8 +64,8 @@ export const teachers: Teacher[] = [
     id: 2,
     nickname: '데이터사이언티스트',
     profileImageUrl: 'https://example.com/images/data-scientist.jpg',
-    expertise: ['데이터 분석', 'Python', 'Machine Learning', 'Deep Learning'],
-    experience: [
+    expertises: ['데이터 분석', 'Python', 'Machine Learning', 'Deep Learning'],
+    experiences: [
       '삼성전자 AI 센터 연구원 (2019-2023)',
       'SK AI 연구소 선임연구원 (2023-현재)',
       '인프런 머신러닝 강좌 제작',
@@ -77,7 +78,7 @@ export const teachers: Teacher[] = [
       courseTotalAverageRatings: 4.9,
       totalReviewCount: 1200,
     },
-    education: [
+    educations: [
       {
         degree: '통계학 학사',
         institution: '고려대학교',
@@ -116,8 +117,8 @@ export const teachers: Teacher[] = [
     id: 3,
     nickname: 'UX디자인프로',
     profileImageUrl: 'https://example.com/images/ux-designer.jpg',
-    expertise: ['UX/UI 디자인', 'Figma', 'Adobe XD', '디자인 시스템'],
-    experience: [
+    expertises: ['UX/UI 디자인', 'Figma', 'Adobe XD', '디자인 시스템'],
+    experiences: [
       '토스 UX 디자이너 (2020-2023)',
       '당근마켓 시니어 디자이너 (2023-현재)',
       '디자인 컨설팅 회사 운영',
@@ -130,7 +131,7 @@ export const teachers: Teacher[] = [
       courseTotalAverageRatings: 4.7,
       totalReviewCount: 420,
     },
-    education: [
+    educations: [
       {
         degree: '시각디자인 학사',
         institution: '홍익대학교',
@@ -581,6 +582,117 @@ export const courseDumy: Course = {
   ],
   progress: 0,
 }
+
+export const teacherCourses: TeacherCourse[] = [
+  {
+    id: 1,
+    imageUrls: [
+      'https://example.com/course1-1.jpg',
+      'https://example.com/course1-2.jpg',
+    ],
+    title: 'Advanced Web Development with React & TypeScript',
+    tags: ['React', 'TypeScript', 'Frontend', 'Web Development'],
+    price: 129000,
+    courseLevelName: 'Advanced',
+    courseCategoryName: 'Programming',
+    isNew: true,
+    isUpdated: false,
+    appUser: {
+      isBookmark: false,
+    },
+    teacher: {
+      id: 101,
+      imageUrl: 'https://example.com/teacher1.jpg',
+      nickname: 'TechMaster Kim',
+    },
+    previewLectures: [
+      {
+        title: 'Python for Data Analysis',
+        duration: 20,
+      },
+      {
+        title: 'Statistical Methods Overview',
+        duration: 25,
+      },
+    ],
+    statics: {
+      reviewAverageRating: 4.8,
+      reviewCount: 245,
+    },
+  },
+  {
+    id: 2,
+    imageUrls: [
+      'https://example.com/course2-1.jpg',
+      'https://example.com/course2-2.jpg',
+    ],
+    title: 'Digital Marketing Fundamentals',
+    tags: ['Marketing', 'Social Media', 'SEO', 'Content Strategy'],
+    price: 89000,
+    courseLevelName: 'Beginner',
+    courseCategoryName: 'Marketing',
+    isNew: false,
+    isUpdated: true,
+    appUser: {
+      isBookmark: true,
+    },
+    teacher: {
+      id: 102,
+      imageUrl: 'https://example.com/teacher2.jpg',
+      nickname: 'Marketing Pro Lee',
+    },
+    previewLectures: [
+      {
+        title: 'Python for Data Analysis',
+        duration: 20,
+      },
+      {
+        title: 'Statistical Methods Overview',
+        duration: 25,
+      },
+    ],
+    statics: {
+      reviewAverageRating: 4.6,
+      reviewCount: 189,
+    },
+  },
+  {
+    id: 3,
+    imageUrls: [
+      'https://example.com/course3-1.jpg',
+      'https://example.com/course3-2.jpg',
+    ],
+    title: 'Data Science with Python',
+    tags: ['Python', 'Data Science', 'Machine Learning', 'Statistics'],
+    price: 149000,
+    courseLevelName: 'Intermediate',
+    courseCategoryName: 'Data Science',
+    isNew: false,
+    isUpdated: false,
+    appUser: {
+      isBookmark: false,
+    },
+    teacher: {
+      id: 103,
+      imageUrl: 'https://example.com/teacher3.jpg',
+      nickname: 'Data Wizard Park',
+    },
+    previewLectures: [
+      {
+        title: 'Python for Data Analysis',
+        duration: 20,
+      },
+      {
+        title: 'Statistical Methods Overview',
+        duration: 25,
+      },
+    ],
+    statics: {
+      reviewAverageRating: 4.9,
+      reviewCount: 312,
+    },
+  },
+]
 
 export const lectures: Lecture[] = [
   {
