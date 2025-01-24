@@ -7,7 +7,6 @@ import {
   WorkHistory,
 } from '@mui/icons-material'
 import {
-  Avatar,
   Box,
   Button,
   Card,
@@ -28,7 +27,7 @@ import { useRouter } from 'next/router'
 import ReviewListItem from '../review/ReviewListItem'
 import ListDirection from '../shared/ListDirection'
 import { Review } from '@/models/review'
-import { courses, reviews, teachers } from '@/utils/dummy'
+import { courses, reviews, teacherCourses, teachers } from '@/utils/dummy'
 
 interface Props {
   teacherId: number
@@ -67,12 +66,12 @@ function TeacherDetail({ teacherId }: Props) {
                   </Typography>
                   <Box display="flex" alignItems="center" gap={1} mb={2}>
                     <Rating
-                      value={teacher.statics.courseTotalAverageRatings}
+                      value={teacher?.statics?.courseTotalAverageRatings}
                       readOnly
                       precision={0.1}
                     />
                     <Typography variant="body2">
-                      ({teacher.statics.totalReviewCount} reviews)
+                      ({teacher?.statics?.totalReviewCount} reviews)
                     </Typography>
                   </Box>
                   <Box display="flex" gap={1}>
@@ -118,7 +117,7 @@ function TeacherDetail({ teacherId }: Props) {
                   Expertise
                 </Typography>
                 <Box display="flex" gap={1} flexWrap="wrap">
-                  {teacher.expertise.map((skill) => (
+                  {teacher.expertises.map((skill) => (
                     <Chip key={skill} label={skill} />
                   ))}
                 </Box>
@@ -133,7 +132,7 @@ function TeacherDetail({ teacherId }: Props) {
                 Experience
               </Typography>
               <List>
-                {teacher.experience.map((exp, index) => (
+                {teacher.experiences.map((exp, index) => (
                   <ListItem key={index}>
                     <ListItemText primary={exp} />
                   </ListItem>
@@ -149,7 +148,7 @@ function TeacherDetail({ teacherId }: Props) {
                 Education
               </Typography>
               <List>
-                {teacher.education.map((edu, index) => (
+                {teacher.educations.map((edu, index) => (
                   <ListItem key={index}>
                     <ListItemText
                       primary={edu.degree}
@@ -171,13 +170,13 @@ function TeacherDetail({ teacherId }: Props) {
               <Grid container spacing={2}>
                 <Grid item xs={6}>
                   <Typography variant="h4">
-                    {teacher.statics.courseCount}
+                    {teacher?.statics?.courseCount}
                   </Typography>
                   <Typography color="textSecondary">Courses</Typography>
                 </Grid>
                 <Grid item xs={6}>
                   <Typography variant="h4">
-                    {teacher.statics.sutdentCount}
+                    {teacher?.statics?.sutdentCount}
                   </Typography>
                   <Typography color="textSecondary">Students</Typography>
                 </Grid>
@@ -242,9 +241,12 @@ function TeacherDetail({ teacherId }: Props) {
             routePath={`/teachers/${teacher.id}/courses`}
           />
           <Spacing />
-          {courses.slice(0, 3).map((course) => (
+          {teacherCourses.slice(0, 3).map((teacherCourse) => (
             <Box>
-              <CourseCard key={course.id} course={course} />
+              <CourseCard
+                key={teacherCourse.id}
+                teacherCourse={teacherCourse}
+              />
               <Spacing />
             </Box>
           ))}
